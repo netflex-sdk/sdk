@@ -5,9 +5,10 @@ namespace Netflex\SDK;
 use Netflex\Log\LogServiceProvider;
 
 use Netflex\API\APIServiceProvider;
-use Netflex\Routing\RoutingServiceProvider;
 use Netflex\Builder\BuilderServiceProvider;
+use Netflex\Customers\CustomerServiceProvider;
 use Netflex\Foundation\FoundationServiceProvider;
+use Netflex\Routing\RoutingServiceProvider;
 
 use Illuminate\Events\EventServiceProvider;
 use Illuminate\Foundation\Application as BaseApplication;
@@ -44,6 +45,7 @@ class Application extends BaseApplication
     // Netflex services
     $this->register(new APIServiceProvider($this));
     $this->register(new BuilderServiceProvider($this));
+    $this->register(new CustomerServiceProvider($this));
     $this->register(new FoundationServiceProvider($this));
     $this->register(new RoutingServiceProvider($this));
   }
