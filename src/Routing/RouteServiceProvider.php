@@ -49,22 +49,24 @@ class RouteServiceProvider extends ServiceProvider
    */
   protected function mapPages()
   {
-    Route::middleware('netflex')
+    Route::middleware(['web'])
       ->group(function () {
         foreach (Page::all() as $page) {
           if ($controller = $page->controller) {
 
             if ($controller = $page->controller) {
-              Route::any($page->url, function (Request $request) use ($page, $controller) {
-
-                // Bind the matched page into the container for later use
-                // This is used internally in Page::current() to resolve the current page
-                $this->app->bind('page', function () use ($page) {
-                  return $page;
-                });
-
+              $route = Route::any($page->url, function (Request $request) use ($page, $controller) {
                 return $controller->index($request);
               });
+
+              $route->data('page', $page);
+              $route->name($page->name);
+
+              $route->middleware('page');
+
+              if (!$page->public) {
+                $route->middleware('group_auth');
+              }
             }
           }
         };
