@@ -3,7 +3,7 @@
 namespace Netflex\Http\Middleware;
 
 use Closure;
-use \Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Cache;
 
 class ClearCache
 {
@@ -12,7 +12,7 @@ class ClearCache
   /**
    * Handle an incoming request.
    *
-   * @param  \Netflex\Http\Request  $request
+   * @param  \Illuminate\Http\Request  $request
    * @param  \Closure  $next
    * @return mixed
    */

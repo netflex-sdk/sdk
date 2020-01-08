@@ -9,6 +9,9 @@ use Netflex\Support\ReactiveObject;
 
 use Illuminate\Support\Facades\Cache;
 
+/**
+ * @property \Illuminate\Support\Collection $areas
+ */
 class Content extends ReactiveObject
 {
   /** @var array */

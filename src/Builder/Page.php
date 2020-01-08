@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\View;
  * @property bool $children_inherit_url
  * @property Template|null $template
  * @property Controller|null $controller
+ * @property Content $content
  * @property bool $published
  * @property int $revision
  * @property bool use_time
@@ -44,7 +45,9 @@ use Illuminate\Support\Facades\View;
  * @property string $body_class
  * @property bool $public
  * @property string $author
- *
+ * @property string $description
+ * @property string $keywords
+ * @property array $authgroups
  */
 class Page extends ReactiveObject implements Responsable
 {
@@ -148,26 +151,48 @@ class Page extends ReactiveObject implements Responsable
   }
 
   /**
+   * Undocumented function
+   *
+   * @param string $authgroups
+   * @return array
+   */
+  public function getAuthGroupsAttribute($authgroups = '')
+  {
+    return array_map(
+      'intval',
+      array_values(
+        array_filter(
+          explode(',', $authgroups)
+        )
+      )
+    );
+  }
+
+  /**
    * Renders the given blocks
    *
    * @param string $area
    * @param array $vars
    * @return string
    */
-  public function getBlocks($area, $vars = [])
+  public function getBlocks($area, $vars = [], $id = null)
   {
+    $page = $id ? Page::retrieve($id) : $this;
     $blocks = [];
 
-    $sections = $this->content->areas->filter(function ($contentArea) use ($area) {
+    $sections = $page->content->areas->filter(function ($contentArea) use ($area) {
       return $contentArea->area === $area;
     })->values();
 
+    $app = app();
+
     foreach ($sections as $section) {
-      $blockhash = $section->title;
+      $app->bind('__blockhash', $section->title);
       $component = Template::get($section->text);
       $view = 'components.' . $component->alias;
-      $data = array_merge($vars, ['page' => $this, 'blockhash' => $blockhash]);
+      $data = array_merge($vars, ['page' => $page, 'blockhash' => $section->title]);
       $blocks[] = View::exists($view) ? View::make($view, $data)->render() : null;
+      $app->bind('__blockhash', null);
     }
 
     return implode("\n", array_filter($blocks));
@@ -176,7 +201,7 @@ class Page extends ReactiveObject implements Responsable
   /**
    * Create an HTTP response that represents the object.
    *
-   * @param  \Netflex\Http\Request $request
+   * @param  \Illuminate\Http\Request $request
    * @return \Symfony\Component\HttpFoundation\Response
    */
   public function toResponse($request)
