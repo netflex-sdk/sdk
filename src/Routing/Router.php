@@ -17,12 +17,28 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 
+use Netflex\Routing\Route;
 use Netflex\Builder\Structure;
 use Netflex\Support\ReactiveObject;
 use Netflex\Support\ItemCollection;
 
 class Router extends \Illuminate\Routing\Router
 {
+  /**
+   * Create a new Route object.
+   *
+   * @param  array|string  $methods
+   * @param  string  $uri
+   * @param  mixed  $action
+   * @return \Netflex\Routing\Route
+   */
+  protected function newRoute($methods, $uri, $action)
+  {
+    return (new Route($methods, $uri, $action))
+      ->setRouter($this)
+      ->setContainer($this->container);
+  }
+
   /**
    * Static version of prepareResponse.
    *
