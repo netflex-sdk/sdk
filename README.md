@@ -1,15 +1,21 @@
-# Netflex SDK
+<p align="center">
+<img width="400" src="https://d3lnipq2e3xuc0.cloudfront.net/media/l/800x400/1557406595/banner.png" alt="Banner">
+</p>
 
-The Netflex SDK is a framework for constructing website using the Netflex Content API.
+<p align="center">
+<a href="https://circleci.com/gh/apility/netflex-sdk"><img src="https://circleci.com/gh/apility/netflex-sdk.svg?style=shield&circle-token=40188cfe2c6ab765c48f112c427785f44f3745f5" alt="Build Status"></a>
+<img src="https://img.shields.io/packagist/dm/apility/netflex-sdk.svg" alt="Downloads">
+<a href="https://github.com/apility/netflex-sdk/releases/latest"><img src="https://img.shields.io/github/tag/apility/netflex-sdk.svg?label=stable" alt="Stable version"></a>
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/apility/netflex-sdk.svg" alt="License: MIT"></a>
+</p>
 
-[![CircleCI](https://circleci.com/gh/apility/netflex-sdk.svg?style=shield&circle-token=40188cfe2c6ab765c48f112c427785f44f3745f5)](https://circleci.com/gh/apility/netflex-sdk)
-[![Docs](https://img.shields.io/badge/docs-docs.netflex.dev-blue.svg)](https://docs.netflex.dev/docs/1.0)
-[![Version](https://img.shields.io/github/tag/apility/netflex-sdk.svg?label=version)](https://github.com/apility/netflex-sdk/releases/latest)
-[![License: MIT](https://img.shields.io/github/license/apility/netflex-sdk.svg)](https://opensource.org/licenses/MIT)
-[![Contributors](https://img.shields.io/github/contributors/apility/netflex-sdk.svg?color=green)](https://github.com/apility/netflex-sdk/graphs/contributors)
-![Downloads](https://img.shields.io/packagist/dm/apility/netflex-sdk.svg)
+## About the Netflex SDK
 
-![banner](https://d3lnipq2e3xuc0.cloudfront.net/media/o/1557406595/banner.png)
+> **Note:** This repository contains the core code of the Netflex SDK. If you want to build an application using Netflex, see one of the template repositories [Netflex Site Template V2](https://github.com/netflexsites/site-template-v2).
+
+The Netflex SDK is a collection of libraries and helper utilities for working with the Netflex Content API and platform for building web applications.
+
+The SDK is built on top of components from Laravel and Symfony, and provides an easy and elegant way to work with the Netflex platform.
 
 ## Installation
 
@@ -17,30 +23,17 @@ The Netflex SDK is a framework for constructing website using the Netflex Conten
 composer require apility/netflex-sdk
 ```
 
-## Usage
+## Contributing
 
-```php
-<?php
+Thank you for considering contributing to the Netflex SDK! Please read the [contribution guide](CONTRIBUTING.md).
 
-require_once(__DIR__ . '/../vendor/autoload.php');
-require_once(Netflex\SDK::bootstrap);
-```
+## Code of Conduct
 
-## Running the test suite
+In order to ensure that the community is welcoming to all, please review and abide by the [Code of Conduct](CODE_OF_CONDUCT.md).
 
-```bash
-composer run-script tests
-```
+## License
 
-## Updating snapshots
-
-When an existing snapshot test has been updated, or its behaviour has been modified, the snapshot will have to be updated to prevent the tests from failing.
-
-To update the snapshots, run the following command.
-
-```bash
-composer run-script tests:update-snapshots
-```
+The Netflex SDK is open-sourced software licensed under the [MIT license](LICENSE.md).
 
 <hr>
 
