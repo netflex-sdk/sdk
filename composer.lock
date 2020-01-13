@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "506399c414dc0f0edfc810a271908ba5",
+    "content-hash": "4e0dedc96b6118208c5239367c66c42e",
     "packages": [
         {
             "name": "apility/netflex-api",
@@ -46,21 +46,22 @@
         },
         {
             "name": "apility/netflex-customers",
-            "version": "v0.0.3",
+            "version": "v0.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apility/netflex-customers.git",
-                "reference": "5d121cc3c678b81d0aba276c502f7f56c64bca2c"
+                "reference": "ef5a44d219078204c77e66da9982962fdcbe7a70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apility/netflex-customers/zipball/5d121cc3c678b81d0aba276c502f7f56c64bca2c",
-                "reference": "5d121cc3c678b81d0aba276c502f7f56c64bca2c",
+                "url": "https://api.github.com/repos/apility/netflex-customers/zipball/ef5a44d219078204c77e66da9982962fdcbe7a70",
+                "reference": "ef5a44d219078204c77e66da9982962fdcbe7a70",
                 "shasum": ""
             },
             "require": {
                 "apility/netflex-api": "^1.0",
-                "apility/netflex-support": "^1.0"
+                "apility/netflex-support": "^1.0",
+                "illuminate/contracts": "^6.10"
             },
             "require-dev": {
                 "larapack/dd": "^1.1",
@@ -86,7 +87,7 @@
                     "email": "thomas@apility.no"
                 }
             ],
-            "time": "2020-01-08T12:52:33+00:00"
+            "time": "2020-01-10T12:21:14+00:00"
         },
         {
             "name": "apility/netflex-support",
@@ -736,16 +737,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.10.0",
+            "version": "v6.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "ba2de9c702d7c90a39b70c9f7e6db8e9d4a1ea3b"
+                "reference": "fe45ad5bc89e5e1b08ab2c8687f9be01c9c84d14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/ba2de9c702d7c90a39b70c9f7e6db8e9d4a1ea3b",
-                "reference": "ba2de9c702d7c90a39b70c9f7e6db8e9d4a1ea3b",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/fe45ad5bc89e5e1b08ab2c8687f9be01c9c84d14",
+                "reference": "fe45ad5bc89e5e1b08ab2c8687f9be01c9c84d14",
                 "shasum": ""
             },
             "require": {
@@ -879,7 +880,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-01-07T14:39:33+00:00"
+            "time": "2020-01-08T21:17:42+00:00"
         },
         {
             "name": "laravel/tinker",

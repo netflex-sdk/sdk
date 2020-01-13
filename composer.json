@@ -41,7 +41,7 @@
     "laravel/framework": "^6.9",
     "laravel/tinker": "^2.0",
     "symfony/psr-http-message-bridge": "^2.0",
-    "apility/netflex-customers": "^0.0.3"
+    "apility/netflex-customers": "^0.0"
   },
   "require-dev": {
     "symfony/cache": "^5.0"
