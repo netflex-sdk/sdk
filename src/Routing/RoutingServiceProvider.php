@@ -2,8 +2,11 @@
 
 namespace Netflex\Routing;
 
+use Netflex\Http\Middleware\GroupAuthentication;
+use Netflex\Http\Middleware\BindPage;
+use Netflex\Http\Middleware\JWT;
+
 use Illuminate\Routing\RoutingServiceProvider as ServiceProvider;
-use Netflex\Builder\Page;
 
 class RoutingServiceProvider extends ServiceProvider
 {
@@ -24,12 +27,13 @@ class RoutingServiceProvider extends ServiceProvider
     // Inject a middleware group for handling Netflex pages
     $router = $this->app->make('router');
 
-    $router->middlewareGroup('page', [
-      \Netflex\Http\Middleware\BindPage::class,
-    ]);
+    $router->aliasMiddleware('jwt', JWT::class);
+    $router->aliasMiddleware('netflex_page', BindPage::class);
+    $router->aliasMiddleware('group_auth', GroupAuthentication::class);
 
-    $router->middlewareGroup('group_auth', [
-      \Netflex\Http\Middleware\GroupAuthentication::class,
+    $router->middlewareGroup('netflex_editor', [
+      'web',
+      'jwt:' . setting('netflex_api')
     ]);
   }
 }
