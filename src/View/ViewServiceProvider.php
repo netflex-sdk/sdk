@@ -2,34 +2,31 @@
 
 namespace Netflex\View;
 
+use Netflex\View\Compilers\BladeCompiler;
+
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\View\ViewServiceProvider as ServiceProvider;
-use Netflex\Routing\Route;
 
-class ViewServiceProvider extends ServiceProvider
+class ViewServiceProvider extends ServiceProvider/*  */
 {
   public function boot()
   {
     foreach ([
-      'blocks' => __DIR__ . '/directives/blocks.php',
-      'content' => __DIR__ . '/directives/content.php',
-      'media' => __DIR__ . '/directives/media.php',
-      'hasContent' => __DIR__ . '/directives/hasContent.php',
-      'elseHasContent' => __DIR__ . '/directives/elseHasContent.php',
-      'endHasContent' => __DIR__ . '/directives/endHascontent.php',
-      'editorButton' => __DIR__ . '/directives/editorButton.php',
+      'blocks' => __DIR__ . '/Directives/blocks.php',
+      'content' => __DIR__ . '/Directives/content.php',
+      'media' => __DIR__ . '/Directives/media.php',
+      'nav' => __DIR__ . '/Directives/nav.php',
+      'image' => __DIR__ . '/Directives/image.php',
+      'picture' => __DIR__ . '/Directives/picture.php',
+      'static' => __DIR__ . '/Directives/static.php',
+      'editorButton' => __DIR__ . '/Directives/editorButton.php',
     ] as $name => $handler) {
       $this->loadDirective($name, $handler);
     }
 
-    Blade::if('mode', function ($mode) {
-      $route = request()->route();
-      if (get_class($route) === Route::class) {
-        return ($route->data('mode') ?? 'live') === $mode;
-      }
-
-      return $mode === 'live';
+    Blade::if('mode', function (...$modes) {
+      return in_array(mode(), $modes);
     });
   }
 
@@ -40,8 +37,22 @@ class ViewServiceProvider extends ServiceProvider
     });
 
     Blade::directive($name, function ($expression) use ($name, $directive) {
-      $comment = "<?php // @$name($expression) ?>\n";
-      return $comment . str_replace('$expression', $expression, $directive);
+      return str_replace('$expression', $expression, $directive);
+    });
+  }
+
+  /**
+   * Register the Blade compiler implementation.
+   *
+   * @return void
+   */
+  public function registerBladeCompiler()
+  {
+    $this->app->singleton('blade.compiler', function () {
+      return new BladeCompiler(
+        $this->app['files'],
+        $this->app['config']['view.compiled']
+      );
     });
   }
 }
