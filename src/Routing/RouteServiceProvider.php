@@ -3,12 +3,14 @@
 namespace Netflex\Routing;
 
 use App;
-
+use Throwable;
 use Netflex\Builder\Page;
 use Netflex\Http\PageController;
+use Illuminate\Support\Facades\Log;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
@@ -49,27 +51,76 @@ class RouteServiceProvider extends ServiceProvider
    */
   protected function mapPages()
   {
-    Route::middleware(['web'])
+    Route::middleware('netflex_editor')
       ->group(function () {
-        foreach (Page::all() as $page) {
-          if ($controller = $page->controller) {
+        Route::any('_', function (Request $request) {
+          $payload = jwt_payload();
+          mode($payload->mode);
 
-            if ($controller = $page->controller) {
-              $route = Route::any($page->url, function (Request $request) use ($page, $controller) {
+          switch ($payload->relation) {
+            case 'page':
+              $page = Page::retrieve($payload->page_id);
+
+              if ($controller = $page->controller) {
+                $route = $request->route();
+                $route->data('page', $page);
+                current_page($page);
+                editor_tools($payload->edit_tools ?? null);
+
                 return $controller->index($request);
-              });
+              }
+              break;
+          }
+        });
+      });
 
-              $route->data('page', $page);
-              $route->name($page->name);
+    Page::all()
+      ->filter(function ($page) {
+        return $page->template && $page->template->type === 'page';
+      })->each(function ($page) {
+        $class = str_replace('\\', '/', $page->template->controller ?? PageController::class);
+        $namespace = str_replace('/', '\\', dirname($class));
+        $namespace = $namespace === '.' ? $this->namespace : $namespace;
+        $class = str_replace('/', '\\', basename($class));
 
-              $route->middleware('page');
+        $controller = "$namespace\\$class";
+
+        tap(new $controller, function ($controller) use ($class, $page, $namespace) {
+          $routes = method_exists($controller, 'getRoutes') ? $controller->getRoutes() : collect();
+          $routes = collect([
+            (object) [
+              'methods' => ['GET'],
+              'action' => 'index',
+              'url' => '/'
+            ]
+          ])->merge($routes);
+
+          $routes->each(function ($route) use ($class, $page, $namespace) {
+            Route::group(['namespace' => $namespace, 'middleware' => ['web', 'netflex_page']], function () use ($route, $class, $page) {
+              $methods = $route->methods;
+              $route->url = trim($route->url, '/');
+              $url = trim("{$page->url}/{$route->url}", '/');
+              $action = "$class@{$route->action}";
+
+              $route = Route::middleware('web')
+                ->match($methods, $url, $action);
 
               if (!$page->public) {
                 $route->middleware('group_auth');
               }
-            }
-          }
-        };
+
+              /* if ($domain = $page->domain) {
+                $route->domain($domain);
+                if (strpos($domain, 'www.') !== 0) {
+                  $route->domain("www.$domain");
+                }
+              } */
+
+              $route->data('page', $page);
+              $route->name($page->name);
+            });
+          });
+        });
       });
   }
 

@@ -2,6 +2,7 @@
 
 namespace Netflex\Builder;
 
+use Netflex\Routing\Route;
 use Netflex\Foundation\Setting;
 use Netflex\Foundation\Template;
 use Netflex\Http\PageController;
@@ -13,6 +14,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -31,11 +33,14 @@ use Illuminate\Support\Facades\View;
  * @property bool $visible
  * @property bool $visible_nav
  * @property bool $visible_subnav
+ * @property string $navtitle
  * @property bool $nav_hidden_xs
  * @property bool $nav_hidden_sm
  * @property bool $nav_hidden_md
  * @property bool $nav_hidden_lg
  * @property string $nav_target
+ * @property string $type
+ * @property Page[] $children
  * @property Page|null $parent
  * @property int $parent_id
  * @property string $title
@@ -48,6 +53,7 @@ use Illuminate\Support\Facades\View;
  * @property string $description
  * @property string $keywords
  * @property array $authgroups
+ * @property string $domain
  */
 class Page extends ReactiveObject implements Responsable
 {
@@ -57,6 +63,9 @@ class Page extends ReactiveObject implements Responsable
 
   /** @var array */
   protected $timestamps = [];
+
+  /** @var Route */
+  public $route;
 
   /**
    * @return static|null
@@ -75,8 +84,23 @@ class Page extends ReactiveObject implements Responsable
    */
   public static function current()
   {
-    if (App::has('page')) {
-      return App::make('page');
+    return current_page();
+  }
+
+  /**
+   * @return string
+   */
+  public function getTypeAttribute()
+  {
+    switch ($this->attributes['template']) {
+      case 'e':
+        return 'external';
+      case 'i':
+        return 'internal';
+      case 'f':
+        return 'folder';
+      default:
+        return 'page';
     }
   }
 
@@ -86,7 +110,16 @@ class Page extends ReactiveObject implements Responsable
    */
   public function getUrlAttribute($url)
   {
-    return $url === 'index/' ? '/' : $url;
+    switch ($this->type) {
+      case 'external':
+        return $url;
+      case 'internal':
+        return static::retrieve($url)->url ?? '#';
+      case 'f':
+        return '#';
+      default:
+        return '/' . trim($url === 'index/' ? '/' : $url, '/');
+    }
   }
 
   /**
@@ -119,17 +152,12 @@ class Page extends ReactiveObject implements Responsable
   }
 
   /**
-   * @param string $controller
    * @return Controller|null
    */
-  public function getControllerAttribute($controller = null)
+  public function getControllerAttribute()
   {
-    if ($controller) {
-      return App::make($controller);
-    }
-
     if ($this->hasTemplate()) {
-      return App::make(PageController::class);
+      return $this->template->controller;
     }
   }
 
@@ -138,11 +166,23 @@ class Page extends ReactiveObject implements Responsable
     return Content::retrieve($this->id);
   }
 
+  public function getParentIdAttribute()
+  {
+    return (int) $this->attributes['parent_id'];;
+  }
+
   public function getParentAttribute()
   {
     if ($this->parent_id) {
       return static::retrieve($this->parent_id);
     }
+  }
+
+  public function getChildrenAttribute()
+  {
+    return static::all()->filter(function ($page) {
+      return (int) $page->parent_id === (int) $this->id;
+    })->values();
   }
 
   public function getContentRevision($revision)
@@ -168,6 +208,12 @@ class Page extends ReactiveObject implements Responsable
     );
   }
 
+  public function getDomainAttribute() {
+    if ($this->group_id) {
+      return static::retrieve($this->group_id)->name;
+    }
+  }
+
   /**
    * Renders the given blocks
    *
@@ -177,22 +223,34 @@ class Page extends ReactiveObject implements Responsable
    */
   public function getBlocks($area, $vars = [], $id = null)
   {
-    $page = $id ? Page::retrieve($id) : $this;
+    $page = $id ? Page::retrieve($id) : page() ?? $this;
     $blocks = [];
 
     $sections = $page->content->areas->filter(function ($contentArea) use ($area) {
       return $contentArea->area === $area;
     })->values();
 
-    $app = app();
-
     foreach ($sections as $section) {
-      $app->bind('__blockhash', $section->title);
+      $blockVars = [];
+      blockhash($section->title);
+
+      $this->content->areas->each(function ($area) use (&$blockVars, $section) {
+        if (preg_match("/^[\w\d_-]+_{$section->title}$/", $area->area)) {
+          $area = Str::replaceLast('_'.blockhash(), '', trim($area->area, '_'));
+          $blockVars[Str::camel($area)] = content($area);
+          $blockVars[Str::snake($area)] = content($area);
+        }
+      });
+
+      $pageVars = (page_variables() ?? []);
+      $vars = array_merge($pageVars, $blockVars, $vars);
+
       $component = Template::get($section->text);
       $view = 'components.' . $component->alias;
-      $data = array_merge($vars, ['page' => $page, 'blockhash' => $section->title]);
-      $blocks[] = View::exists($view) ? View::make($view, $data)->render() : null;
-      $app->bind('__blockhash', null);
+      $data = array_merge($vars, ['blockhash' => $section->title]);
+      $blocks[] = View::exists($view) ? trim(View::make($view, $data)->render()) : null;
+
+      blockhash(null);
     }
 
     return implode("\n", array_filter($blocks));
@@ -206,11 +264,30 @@ class Page extends ReactiveObject implements Responsable
    */
   public function toResponse($request)
   {
+    $vars = [];
+
+    $data = [
+      'request' => $request,
+      'page' => $this
+    ];
+
+    $this->content->areas->each(function ($area) use (&$vars) {
+      if (!preg_match('/^[\w\d_-]+_nf[\w\d_-]+$/', $area->area)) {
+        $area = trim($area->area, '_');
+        $vars[Str::camel($area)] = content($area);
+        $vars[Str::snake($area)] = content($area);
+      }
+    });
+
+    $response = '';
+    page_variables(array_merge($vars, $data));
+
     if ($template = $this->template) {
-      return $template->toResponse([
-        'request' => $request,
-        'page' => $this
-      ]);
+      $response = $template->toResponse();
     }
+
+    page_variables([]);
+
+    return $response;
   }
 }

@@ -10,6 +10,19 @@ use Illuminate\Http\Response;
 class PageController extends Controller
 {
   /**
+   * Additional Netflex page routes
+   *
+   * @var array
+   */
+  protected $routes = [
+    [
+      'methods' => ['GET'],
+      'action' => 'index',
+      'url' => '/'
+    ]
+  ];
+
+  /**
    * @param Request $request
    * @return Response
    */

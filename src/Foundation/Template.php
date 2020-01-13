@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
 use Illuminate\Contracts\Support\Responsable;
+use Netflex\Http\PageController;
 
 class Template extends ReactiveObject implements Responsable
 {
@@ -48,7 +49,8 @@ class Template extends ReactiveObject implements Responsable
    */
   public function toResponse($variables = [])
   {
-    return View::make("templates/{$this->alias}", $variables)
+    $pageVars = page_variables() ?? [];
+    return View::make("templates/{$this->alias}", array_merge($pageVars, $variables))
       ->render();
   }
 }
