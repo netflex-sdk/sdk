@@ -3,8 +3,8 @@
 namespace Netflex\Console;
 
 use Netflex\Console\Commands\ServeCommand;
+use Netflex\Console\Commands\CacheClearCommand;
 
-use Illuminate\Cache\Console\ClearCommand as CacheClearCommand;
 use Illuminate\Cache\Console\ForgetCommand as CacheForgetCommand;
 use Illuminate\Console\Scheduling\ScheduleFinishCommand;
 use Illuminate\Console\Scheduling\ScheduleRunCommand;
@@ -26,6 +26,7 @@ use Illuminate\Foundation\Console\JobMakeCommand;
 use Illuminate\Foundation\Console\KeyGenerateCommand;
 use Illuminate\Foundation\Console\ListenerMakeCommand;
 use Illuminate\Foundation\Console\ModelMakeCommand;
+use Illuminate\Foundation\Console\NotificationMakeCommand;
 use Illuminate\Foundation\Console\ObserverMakeCommand;
 use Illuminate\Foundation\Console\PackageDiscoverCommand;
 use Illuminate\Foundation\Console\PolicyMakeCommand;
@@ -86,6 +87,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     'ListenerMake' => 'command.listener.make',
     'MiddlewareMake' => 'command.middleware.make',
     'ModelMake' => 'command.model.make',
+    'NotificationMake' => 'command.notification.make',
     'ObserverMake' => 'command.observer.make',
     'PolicyMake' => 'command.policy.make',
     'ProviderMake' => 'command.provider.make',
@@ -373,6 +375,18 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
   {
     $this->app->singleton('command.model.make', function ($app) {
       return new ModelMakeCommand($app['files']);
+    });
+  }
+
+  /**
+   * Register the command.
+   *
+   * @return void
+   */
+  protected function registerNotificationMakeCommand()
+  {
+    $this->app->singleton('command.notification.make', function ($app) {
+      return new NotificationMakeCommand($app['files']);
     });
   }
 
