@@ -19,6 +19,8 @@ class Content extends ReactiveObject
 
   public static function retrieve($id = null, $revision = null)
   {
+    $revision = $revision ?? jwt_payload()->revision_id ?? null;
+
     $id = $id ?? Page::current()->id;
     $url = trim("builder/pages/$id/content/$revision", '/');
     $areas = Cache::rememberForever($url, function () use ($url) {
