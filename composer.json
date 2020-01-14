@@ -1,6 +1,6 @@
 {
   "name": "netflex/sdk",
-  "description": "The Netflex platform SDK",
+  "description": "Netflex platform SDK",
   "type": "library",
   "license": "MIT",
   "keywords": [
