@@ -1,5 +1,5 @@
 {
-  "name": "apility/netflex-sdk",
+  "name": "netflex/sdk",
   "description": "The Netflex platform SDK",
   "type": "library",
   "license": "MIT",
@@ -8,7 +8,7 @@
     "netflex",
     "framework"
   ],
-  "homepage": "https://github.com/apility/netflex-sdk",
+  "homepage": "https://github.com/netflex-sdk/sdk",
   "authors": [
     {
       "name": "Thomas Alrek",
@@ -18,8 +18,8 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/apility/netflex-sdk/issues",
-    "source": "https://github.com/apility/netflex-sdk"
+    "issues": "https://github.com/netflex-sdk/sdk/issues",
+    "source": "https://github.com/netflex-sdk/sdk"
   },
   "autoload": {
     "files": [
@@ -32,16 +32,17 @@
   "config": {
     "platform": {
       "php": "7.3"
-    }
+    },
+    "sort-packages": true
   },
   "require": {
-    "php": "^7.3",
-    "apility/netflex-support": "^1.4",
     "fideloper/proxy": "^4.0",
     "laravel/framework": "^6.9",
     "laravel/tinker": "^2.0",
-    "symfony/psr-http-message-bridge": "^2.0",
-    "apility/netflex-customers": "^0.0"
+    "netflex/customers": "^1.0.0-alpha",
+    "netflex/support": "^2.0",
+    "php": "^7.3",
+    "symfony/psr-http-message-bridge": "^2.0"
   },
   "require-dev": {
     "symfony/cache": "^5.0"

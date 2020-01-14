@@ -4,133 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4e0dedc96b6118208c5239367c66c42e",
+    "content-hash": "7df2458fe5c6d0496350b66d02e8fe00",
     "packages": [
-        {
-            "name": "apility/netflex-api",
-            "version": "v1.0.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/apility/netflex-api.git",
-                "reference": "6a4bf5d8d990fe37c31b54020790905ec531ef01"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/apility/netflex-api/zipball/6a4bf5d8d990fe37c31b54020790905ec531ef01",
-                "reference": "6a4bf5d8d990fe37c31b54020790905ec531ef01",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^6.3"
-            },
-            "require-dev": {
-                "vlucas/phpdotenv": "^3.6"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Netflex\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Thomas Alrek",
-                    "email": "thomas@apility.no"
-                }
-            ],
-            "time": "2019-10-17T11:44:37+00:00"
-        },
-        {
-            "name": "apility/netflex-customers",
-            "version": "v0.0.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/apility/netflex-customers.git",
-                "reference": "ef5a44d219078204c77e66da9982962fdcbe7a70"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/apility/netflex-customers/zipball/ef5a44d219078204c77e66da9982962fdcbe7a70",
-                "reference": "ef5a44d219078204c77e66da9982962fdcbe7a70",
-                "shasum": ""
-            },
-            "require": {
-                "apility/netflex-api": "^1.0",
-                "apility/netflex-support": "^1.0",
-                "illuminate/contracts": "^6.10"
-            },
-            "require-dev": {
-                "larapack/dd": "^1.1",
-                "vlucas/phpdotenv": "^3.6"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Netflex\\Customers\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Olav Øyen",
-                    "email": "olav@apility.no"
-                },
-                {
-                    "name": "Thomas Alrek",
-                    "email": "thomas@apility.no"
-                }
-            ],
-            "time": "2020-01-10T12:21:14+00:00"
-        },
-        {
-            "name": "apility/netflex-support",
-            "version": "v1.4.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/apility/netflex-support.git",
-                "reference": "78c80fabc5f7cc00e7698f4f7581663d5a582c1e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/apility/netflex-support/zipball/78c80fabc5f7cc00e7698f4f7581663d5a582c1e",
-                "reference": "78c80fabc5f7cc00e7698f4f7581663d5a582c1e",
-                "shasum": ""
-            },
-            "require": {
-                "apility/netflex-api": "^1.0",
-                "nesbot/carbon": "^2.28",
-                "tightenco/collect": "^6.3"
-            },
-            "require-dev": {
-                "larapack/dd": "^1.1",
-                "phpunit/phpunit": "^8.5",
-                "vlucas/phpdotenv": "^3.6"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Netflex\\Support\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Thomas Alrek",
-                    "email": "thomas@apility.no"
-                }
-            ],
-            "time": "2020-01-03T23:35:44+00:00"
-        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "v0.1.1",
@@ -947,16 +822,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "1.1.2",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "772e03fa9c6477ef5ef2d154fefd8a2a8d8ed03c"
+                "reference": "2533c389fd2a7573d4f7be279b1c33cf941c8dfc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/772e03fa9c6477ef5ef2d154fefd8a2a8d8ed03c",
-                "reference": "772e03fa9c6477ef5ef2d154fefd8a2a8d8ed03c",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/2533c389fd2a7573d4f7be279b1c33cf941c8dfc",
+                "reference": "2533c389fd2a7573d4f7be279b1c33cf941c8dfc",
                 "shasum": ""
             },
             "require": {
@@ -968,7 +843,7 @@
             },
             "require-dev": {
                 "cebe/markdown": "~1.0",
-                "commonmark/commonmark.js": "0.29.0",
+                "commonmark/commonmark.js": "0.29.1",
                 "erusev/parsedown": "~1.0",
                 "ext-json": "*",
                 "michelf/php-markdown": "~1.4",
@@ -987,7 +862,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2-dev"
+                    "dev-master": "1.3-dev"
                 }
             },
             "autoload": {
@@ -1014,7 +889,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2019-12-10T02:55:03+00:00"
+            "time": "2020-01-09T22:41:09+00:00"
         },
         {
             "name": "league/commonmark-ext-table",
@@ -1315,6 +1190,132 @@
                 "time"
             ],
             "time": "2019-12-16T16:30:25+00:00"
+        },
+        {
+            "name": "netflex/api",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/netflex-sdk/api.git",
+                "reference": "9b31d91e235287d9a355880d1df501b8e5d992ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/netflex-sdk/api/zipball/9b31d91e235287d9a355880d1df501b8e5d992ce",
+                "reference": "9b31d91e235287d9a355880d1df501b8e5d992ce",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.3"
+            },
+            "require-dev": {
+                "vlucas/phpdotenv": "^3.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Netflex\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thomas Alrek",
+                    "email": "thomas@apility.no"
+                }
+            ],
+            "time": "2020-01-10T14:01:31+00:00"
+        },
+        {
+            "name": "netflex/customers",
+            "version": "v1.0.0-alpha",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/netflex-sdk/customers.git",
+                "reference": "2696e8c7a504821a4e7437114ffb42e6495af04e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/netflex-sdk/customers/zipball/2696e8c7a504821a4e7437114ffb42e6495af04e",
+                "reference": "2696e8c7a504821a4e7437114ffb42e6495af04e",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^6.10",
+                "netflex/api": "^2.0",
+                "netflex/support": "2.0",
+                "php": "^7.3"
+            },
+            "require-dev": {
+                "larapack/dd": "^1.1",
+                "vlucas/phpdotenv": "^3.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Netflex\\Customers\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Olav Øyen",
+                    "email": "olav@apility.no"
+                },
+                {
+                    "name": "Thomas Alrek",
+                    "email": "thomas@apility.no"
+                }
+            ],
+            "time": "2020-01-14T10:18:45+00:00"
+        },
+        {
+            "name": "netflex/support",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/netflex-sdk/support.git",
+                "reference": "0489a6a15a30f5fdee38b0a5be046e6a5fd7d66b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/netflex-sdk/support/zipball/0489a6a15a30f5fdee38b0a5be046e6a5fd7d66b",
+                "reference": "0489a6a15a30f5fdee38b0a5be046e6a5fd7d66b",
+                "shasum": ""
+            },
+            "require": {
+                "nesbot/carbon": "^2.28",
+                "netflex/api": "^2.0",
+                "tightenco/collect": "^6.3"
+            },
+            "require-dev": {
+                "larapack/dd": "^1.1",
+                "phpunit/phpunit": "^8.5",
+                "vlucas/phpdotenv": "^3.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Netflex\\Support\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thomas Alrek",
+                    "email": "thomas@apility.no"
+                }
+            ],
+            "time": "2020-01-10T14:21:20+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -3822,7 +3823,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "netflex/customers": 15
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

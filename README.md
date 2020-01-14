@@ -3,10 +3,10 @@
 </p>
 
 <p align="center">
-<a href="https://circleci.com/gh/apility/netflex-sdk"><img src="https://circleci.com/gh/apility/netflex-sdk.svg?style=shield&circle-token=40188cfe2c6ab765c48f112c427785f44f3745f5" alt="Build Status"></a>
-<img src="https://img.shields.io/packagist/dm/apility/netflex-sdk.svg" alt="Downloads">
-<a href="https://github.com/apility/netflex-sdk/releases/latest"><img src="https://img.shields.io/github/tag/apility/netflex-sdk.svg?label=stable" alt="Stable version"></a>
-<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/apility/netflex-sdk.svg" alt="License: MIT"></a>
+<a href="https://circleci.com/gh/netflex-sdk/sdk"><img src="https://circleci.com/gh/netflex-sdk/sdk.svg?style=shield&circle-token=40188cfe2c6ab765c48f112c427785f44f3745f5" alt="Build Status"></a>
+<img src="https://img.shields.io/packagist/dm/netflex-sdk/sdk.svg" alt="Downloads">
+<a href="https://github.com/netflex-sdk/sdk/releases/latest"><img src="https://img.shields.io/github/tag/netflex-sdk/sdk.svg?label=stable" alt="Stable version"></a>
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/netflex-sdk/sdk.svg" alt="License: MIT"></a>
 </p>
 
 ## About the Netflex SDK
@@ -20,7 +20,7 @@ The SDK is built on top of components from Laravel and Symfony, and provides an 
 ## Installation
 
 ```bash
-composer require apility/netflex-sdk
+composer require netflex/sdk
 ```
 
 ## Contributing
