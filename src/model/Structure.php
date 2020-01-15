@@ -158,7 +158,7 @@ abstract class Structure implements ArrayAccess, Serializable, JsonSerializable
     }
 
     $this->_modified = [];
-    NF::$cache->save('entry/' . $this->id, serialize($this->attributes));
+    NF::$cache->save('entry/' . $this->id, $this->attributes);
 
     static::performHookOn($this, 'saved');
     return $this;
@@ -172,7 +172,7 @@ abstract class Structure implements ArrayAccess, Serializable, JsonSerializable
 
     static::performHookOn($this, 'deleting');
     NF::$capi->delete('builder/structures/entry/' . $this->id);
-    NF::$cache->delete('builder_structures_entry_' . $this->id);
+    NF::$cache->delete('entry/' . $this->id);
     static::performHookOn($this, 'deleted');
     return $this;
   }
