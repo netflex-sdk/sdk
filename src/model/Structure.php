@@ -158,7 +158,7 @@ abstract class Structure implements ArrayAccess, Serializable, JsonSerializable
     }
 
     $this->_modified = [];
-    NF::$cache->save('entry/' . $this->id, serialize($this->attributes));
+    NF::$cache->save('entry/' . $this->id, $this->attributes);
 
     static::performHookOn($this, 'saved');
     return $this;
