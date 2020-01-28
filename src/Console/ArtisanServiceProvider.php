@@ -2,8 +2,9 @@
 
 namespace Netflex\Console;
 
-use Netflex\Console\Commands\ServeCommand;
 use Netflex\Console\Commands\CacheClearCommand;
+use Netflex\Console\Commands\ModelMakeCommand;
+use Netflex\Console\Commands\ServeCommand;
 
 use Illuminate\Cache\Console\ForgetCommand as CacheForgetCommand;
 use Illuminate\Console\Scheduling\ScheduleFinishCommand;
@@ -25,7 +26,6 @@ use Illuminate\Foundation\Console\ExceptionMakeCommand;
 use Illuminate\Foundation\Console\JobMakeCommand;
 use Illuminate\Foundation\Console\KeyGenerateCommand;
 use Illuminate\Foundation\Console\ListenerMakeCommand;
-use Illuminate\Foundation\Console\ModelMakeCommand;
 use Illuminate\Foundation\Console\NotificationMakeCommand;
 use Illuminate\Foundation\Console\ObserverMakeCommand;
 use Illuminate\Foundation\Console\PackageDiscoverCommand;
@@ -44,6 +44,7 @@ use Illuminate\Foundation\Console\ViewCacheCommand;
 use Illuminate\Foundation\Console\ViewClearCommand;
 use Illuminate\Routing\Console\ControllerMakeCommand;
 use Illuminate\Routing\Console\MiddlewareMakeCommand;
+
 use Illuminate\Support\ServiceProvider;
 
 class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvider

@@ -2,7 +2,7 @@
 
 namespace Netflex\Encryption;
 
-use Netflex\Foundation\Setting;
+use Netflex\Foundation\Variable;
 
 use RuntimeException;
 use Illuminate\Support\Str;
@@ -21,7 +21,7 @@ class EncryptionServiceProvider extends ServiceProvider
   protected function key(array $config)
   {
     if (empty($config['key'])) {
-      $key = Setting::get('netflex_api');
+      $key = Variable::get('netflex_api');
 
       if (empty($key)) {
         throw new RuntimeException(

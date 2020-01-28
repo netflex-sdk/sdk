@@ -88,7 +88,6 @@ class SDK
    */
   public function handle(Request $request = null)
   {
-    mode('live');
     $request = $request ?? Request::capture();
     $kernel = $this->app->make(HttpKernel::class);
     $response = $kernel->handle($request);

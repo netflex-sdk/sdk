@@ -2,33 +2,11 @@
 
 namespace Netflex\Http;
 
-use Netflex\Builder\Page;
+use Netflex\Pages\Controllers\PageController as Controller;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class PageController extends Controller
 {
-  /**
-   * Additional Netflex page routes
-   *
-   * @var array
-   */
-  protected $routes = [
-    [
-      'methods' => ['GET'],
-      'action' => 'index',
-      'url' => '/'
-    ]
-  ];
-
-  /**
-   * @param Request $request
-   * @return Response
-   */
-  public function index(Request $request)
-  {
-    return Page::current()
-      ->toResponse($request);
-  }
 }

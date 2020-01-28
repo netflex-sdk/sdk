@@ -36,12 +36,13 @@
     "sort-packages": true
   },
   "require": {
+    "php": "^7.3",
     "fideloper/proxy": "^4.0",
     "laravel/framework": "^6.9",
     "laravel/tinker": "^2.0",
-    "netflex/customers": "^1.0.0-alpha",
-    "netflex/support": "^2.0",
-    "php": "^7.3",
+    "netflex/api": "^3.0",
+    "netflex/foundation": "^2.0",
+    "netflex/support": "^3.0",
     "symfony/psr-http-message-bridge": "^2.0"
   },
   "require-dev": {

@@ -2,14 +2,11 @@
 
 namespace Netflex\SDK;
 
+use Exception;
 use Netflex\Log\LogServiceProvider;
+use Netflex\API\Providers\APIServiceProvider;
 
-use Netflex\API\APIServiceProvider;
-use Netflex\Builder\BuilderServiceProvider;
-use Netflex\Customers\CustomerServiceProvider;
-use Netflex\Foundation\FoundationServiceProvider;
-use Netflex\Routing\RoutingServiceProvider;
-
+use Illuminate\Routing\RoutingServiceProvider;
 use Illuminate\Events\EventServiceProvider;
 use Illuminate\Foundation\Application as BaseApplication;
 
@@ -20,7 +17,7 @@ class Application extends BaseApplication
    *
    * @var string
    */
-  const VERSION = '2.0.0';
+  const VERSION = '2.0';
 
   /**
    * Get the path to the bootstrap directory.
@@ -40,13 +37,9 @@ class Application extends BaseApplication
    */
   protected function registerBaseServiceProviders()
   {
+    $this->register(new APIServiceProvider($this));
     $this->register(new EventServiceProvider($this));
     $this->register(new LogServiceProvider($this));
-    // Netflex services
-    $this->register(new APIServiceProvider($this));
-    $this->register(new BuilderServiceProvider($this));
-    $this->register(new CustomerServiceProvider($this));
-    $this->register(new FoundationServiceProvider($this));
     $this->register(new RoutingServiceProvider($this));
   }
 
@@ -86,7 +79,7 @@ class Application extends BaseApplication
       'redirect'             => [\Illuminate\Routing\Redirector::class],
       'redis'                => [\Illuminate\Redis\RedisManager::class, \Illuminate\Contracts\Redis\Factory::class],
       'request'              => [\Illuminate\Http\Request::class, \Symfony\Component\HttpFoundation\Request::class],
-      'router'               => [\Netflex\Routing\Router::class, \Illuminate\Routing\Router::class, \Illuminate\Contracts\Routing\Registrar::class,  \Illuminate\Contracts\Routing\BindingRegistrar::class],
+      'router'               => [\Illuminate\Routing\Router::class, \Illuminate\Routing\Router::class, \Illuminate\Contracts\Routing\Registrar::class,  \Illuminate\Contracts\Routing\BindingRegistrar::class],
       'session'              => [\Illuminate\Session\SessionManager::class],
       'session.store'        => [\Illuminate\Session\Store::class, \Illuminate\Contracts\Session\Session::class],
       'url'                  => [\Illuminate\Routing\UrlGenerator::class, \Illuminate\Contracts\Routing\UrlGenerator::class],
