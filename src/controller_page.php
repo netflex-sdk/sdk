@@ -85,21 +85,6 @@ if ($url_redirect !== 0) {
   exit;
 }
 
-// Regular redirects
-switch ($url) {
-  case 'sitemap.xml/':
-    require NF::nfPath('seo/sitemap.xml.php');
-    exit;
-  case 'sitemap.xsl/':
-    require NF::nfPath('seo/sitemap.xsl.php');
-    exit;
-  case 'robots.txt/':
-    require NF::nfPath('seo/robots.php');
-    exit;
-  default:
-    break;
-}
-
 // Find page
 $found_page = 0;
 $process_url = $url;
