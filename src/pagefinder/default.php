@@ -32,6 +32,21 @@ while ($found_url_level > 0 && $found_page_level == null) {
     die();
   }
 
+  // Regular redirects
+  switch ($url) {
+    case 'sitemap.xml/':
+      require NF::nfPath('seo/sitemap.xml.php');
+      exit;
+    case 'sitemap.xsl/':
+      require NF::nfPath('seo/sitemap.xsl.php');
+      exit;
+    case 'robots.txt/':
+      require NF::nfPath('seo/robots.php');
+      exit;
+    default:
+      break;
+  }
+
   $pages = NF::$site->pages;
 
   foreach ($pages as $paged) {
