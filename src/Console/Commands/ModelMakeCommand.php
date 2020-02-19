@@ -2,6 +2,11 @@
 
 namespace Netflex\Console\Commands;
 
+use Netflex\API\Facades\API;
+
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
+
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
@@ -36,6 +41,26 @@ class ModelMakeCommand extends GeneratorCommand
    */
   public function handle()
   {
+    if (!$this->option('directory')) {
+      $menu = $this->menu('Which relationId should the model use?')
+        ->setForegroundColour('white')
+        ->setBackgroundColour('red')
+        ->setExitButtonText('Skip');
+
+      $structures = API::get('builder/structures');
+
+      Collection::make($structures)
+        ->each(function ($structure) use ($menu) {
+          $menu->addOption($structure->id, "{$structure->name} ({$structure->id})");
+        });
+
+      $menu->addStaticItem('');
+
+      if ($relationId = $menu->open()) {
+        $this->input->setOption('directory', $relationId);
+      }
+    }
+
     if (parent::handle() === false && !$this->option('force')) {
       return false;
     }
@@ -64,6 +89,7 @@ class ModelMakeCommand extends GeneratorCommand
     $this->call('make:controller', [
       'name' => "{$controller}Controller",
       '--model' => $this->option('resource') ? $modelName : null,
+      '--api'   => $this->option('api'),
     ]);
   }
 
@@ -118,6 +144,7 @@ class ModelMakeCommand extends GeneratorCommand
       ['controller', 'c', InputOption::VALUE_NONE, 'Create a new controller for the model'],
       ['force', null, InputOption::VALUE_NONE, 'Create the class even if the model already exists'],
       ['resource', 'r', InputOption::VALUE_NONE, 'Indicates if the generated controller should be a resource controller'],
+      ['api', null, InputOption::VALUE_NONE, 'Indicates if the generated controller should be an api controller']
     ];
   }
 }

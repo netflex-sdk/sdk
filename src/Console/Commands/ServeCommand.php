@@ -2,7 +2,9 @@
 
 namespace Netflex\Console\Commands;
 
-class ServeCommand extends \Illuminate\Foundation\Console\ServeCommand
+use Illuminate\Foundation\Console\ServeCommand as Command;
+
+class ServeCommand extends Command
 {
   /**
    * Get the port for the command.
