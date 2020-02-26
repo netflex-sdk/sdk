@@ -2,18 +2,24 @@
 
 namespace Netflex\Console\Commands;
 
-use Illuminate\Support\Collection;
 use Closure;
-use Dotenv\Dotenv;
 use Exception;
+
 use Netflex\API\Client;
 use Netflex\API\Facades\API;
-use Symfony\Component\Console\Input\InputOption;
 use Netflex\Foundation\Variable;
+
+use Dotenv\Dotenv;
+
 use Illuminate\Foundation\Console\ServeCommand as Command;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Artisan;
+
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Process\Process;
+
 use JnJairo\Laravel\Ngrok\NgrokProcessBuilder;
 use JnJairo\Laravel\Ngrok\NgrokWebService;
-use Symfony\Component\Process\Process;
 
 class ServeCommand extends Command
 {
@@ -144,6 +150,7 @@ class ServeCommand extends Command
   {
     if (!$this->variable) {
       $this->progressBar->advance(1);
+      Artisan::call('cache:clear');
       $this->variable = Variable::retrieve('netflex_editor_proxy');
     }
 
@@ -373,7 +380,7 @@ class ServeCommand extends Command
   {
     $options = parent::getOptions();
     $options[] = [
-      'local', null, InputOption::VALUE_NONE, 'Only serve local, skips ngrok'
+      'local', null, InputOption::VALUE_NONE, 'Only serve locally, skips ngrok'
     ];
 
     return $options;
