@@ -44,7 +44,8 @@
     "netflex/foundation": "^2.0.0-RC1",
     "netflex/support": "^2.0.0-RC1",
     "nunomaduro/laravel-console-menu": "^2.3",
-    "symfony/psr-http-message-bridge": "^2.0"
+    "symfony/psr-http-message-bridge": "^2.0",
+    "jn-jairo/laravel-ngrok": "^0.0.4"
   },
   "require-dev": {
     "symfony/cache": "^5.0"
