@@ -129,10 +129,12 @@ class ServeCommand extends Command
         $response = $this->client()->get('user/auth');
         $this->userId = (int) $response->user->id;
       } catch (Exception $e) {
+        $this->progressBar->clear();
         $this->error('Invalid credentials');
         $this->deleteCredentials();
         $this->userId = null;
         $this->userClient = null;
+        $this->progressBar->display();
 
         return $this->userId();
       }
@@ -237,9 +239,11 @@ class ServeCommand extends Command
 
     $this->deleteCredentials();
 
+    $this->progressBar->clear();
     $this->error('Please setup your Netflex credentials');
     $username = $this->ask('Username');
     $password = $this->secret('Password');
+    $this->progressBar->display();
 
     $config = "NETFLEX_USERNAME=\"$username\"\nNETFLEX_PASSWORD=\"{$password}\"\n";
     file_put_contents($path, $config);
