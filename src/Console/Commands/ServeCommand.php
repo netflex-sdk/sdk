@@ -163,7 +163,7 @@ class ServeCommand extends Command
   {
     if (!$this->variable()) {
       $this->configuration = (object) [
-        'default' => 'https://' . $this->alias() . '.netflex.dev',
+        'default' => 'https://' . $this->siteAlias() . '.netflex.dev',
         'authorization' => 'jwt',
         'path' => '.well-known/netflex',
         'proxies' => Collection::make([])
