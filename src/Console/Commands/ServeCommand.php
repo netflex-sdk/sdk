@@ -210,6 +210,7 @@ class ServeCommand extends Command
     $this->configuration->proxies = $this->configuration->proxies->values();
 
     $payload = (object) [
+      'name' => 'Editor Proxy',
       'alias' => 'netflex_editor_proxy',
       'format' => 'json',
       'value' => json_encode($this->configuration, JSON_PRETTY_PRINT)
