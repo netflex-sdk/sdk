@@ -10,10 +10,18 @@ class PDF {
 
   private $options;
 
+  private $format = 'pdf';
+
+  private $mimetype = 'application/pdf';
+
   public function __construct ($url, $options = []) {
     $this->url = $url;
     $this->options = $options;
     $this->client = new Client();
+  }
+
+  public function format ($format) {
+    $this->format = $format;
   }
 
   public function wait ($wait = 0) {
@@ -121,16 +129,19 @@ class PDF {
   }
 
   public function getURL () {
-    $response = json_decode(
-      NF::$capi->post(
-        'foundation/pdf', [
-          'json' => [
-            'url' => $this->url,
-            'options' => $this->options
-          ]
+    $response = NF::$capi->post(
+      'foundation/pdf', [
+        'json' => [
+          'url' => $this->url,
+          'format' => $this->format,
+          'options' => $this->options
         ]
-      )->getBody()
+      ]
     );
+
+    $this->mimetype = $response->getHeader('Content-Type');
+
+    $response = json_decode($response->getBody());
 
     return $response->url;
   }
@@ -141,7 +152,7 @@ class PDF {
     ob_clean();
 
     if ($url) {
-      header('Content-Type: application/pdf');
+      header('Content-Type: ' . $this->mimetype);
       $pdf = $this->client->get($url)
         ->getBody()
         ->getContents();
