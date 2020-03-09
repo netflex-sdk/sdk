@@ -38,14 +38,14 @@
   "require": {
     "php": "^7.3",
     "fideloper/proxy": "^4.0",
-    "laravel/framework": "^6.16",
+    "jn-jairo/laravel-ngrok": "^1.0",
+    "laravel/framework": "^7.0",
     "laravel/tinker": "^2.0",
-    "netflex/api": "^2.0.0-RC1",
-    "netflex/foundation": "^2.0.0-RC1",
-    "netflex/support": "^2.0.0-RC1",
+    "netflex/api": "^2.0.0-RC2",
+    "netflex/foundation": "^2.0.0-RC2",
+    "netflex/support": "^2.0.0-RC2",
     "nunomaduro/laravel-console-menu": "^2.3",
-    "symfony/psr-http-message-bridge": "^2.0",
-    "jn-jairo/laravel-ngrok": "^0.0.4"
+    "symfony/psr-http-message-bridge": "^2.0"
   },
   "require-dev": {
     "symfony/cache": "^5.0"
