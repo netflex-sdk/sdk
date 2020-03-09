@@ -86,7 +86,7 @@ class ServeCommand extends Command
    */
   protected function port()
   {
-    $port = $this->input->getOption('port') ?: 8080;
+    $port = $this->input->getOption('port') ?: 8000;
 
     return $port + $this->portOffset;
   }
