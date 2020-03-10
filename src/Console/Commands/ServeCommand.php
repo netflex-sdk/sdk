@@ -95,7 +95,7 @@ class ServeCommand extends Command
   {
     if (!$this->userClient) {
       try {
-        Dotenv::create($_SERVER['HOME'], $this->credentialsFile)->overload();
+        Dotenv::createMutable($_SERVER['HOME'], $this->credentialsFile)->safeLoad();
 
         $username = env('NETFLEX_USERNAME');
         $password = env('NETFLEX_PASSWORD');
