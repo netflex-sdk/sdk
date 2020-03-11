@@ -35,24 +35,21 @@
     },
     "sort-packages": true
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "require": {
     "php": "^7.3",
     "fideloper/proxy": "^4.0",
     "jn-jairo/laravel-ngrok": "^1.0",
     "laravel/framework": "^7.0",
     "laravel/tinker": "^2.0",
-    "netflex/api": "^2.0.0-RC2",
-    "netflex/foundation": "^2.0.0-RC2",
-    "netflex/support": "^2.0.0-RC2",
+    "netflex/api": "^2.0",
+    "netflex/foundation": "^2.0",
+    "netflex/support": "^2.0",
     "nunomaduro/laravel-console-menu": "^2.3",
     "symfony/psr-http-message-bridge": "^2.0"
   },
   "require-dev": {
     "symfony/cache": "^5.0"
-  },
-  "suggest": {
-    "apility/attribute-list": "Helper class for generating attribute lists for Vue components",
-    "apility/opengraph": "Helper library for creating OpenGraph meta tags",
-    "apility/netflex-commerce": "Makes it easier to work with the Netflex Commerce API"
   }
 }
