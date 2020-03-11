@@ -1350,16 +1350,16 @@
         },
         {
             "name": "netflex/support",
-            "version": "v2.0.0-RC2",
+            "version": "v2.0.0-RC3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/netflex-sdk/support.git",
-                "reference": "b3eb450c748156491758086c61606c4660fb6b69"
+                "reference": "5c560bf7a243db8af781ed94fdc9ba082652ea3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/netflex-sdk/support/zipball/b3eb450c748156491758086c61606c4660fb6b69",
-                "reference": "b3eb450c748156491758086c61606c4660fb6b69",
+                "url": "https://api.github.com/repos/netflex-sdk/support/zipball/5c560bf7a243db8af781ed94fdc9ba082652ea3c",
+                "reference": "5c560bf7a243db8af781ed94fdc9ba082652ea3c",
                 "shasum": ""
             },
             "require": {
@@ -1388,7 +1388,7 @@
                 }
             ],
             "description": "Netflex Support library",
-            "time": "2020-03-09T22:47:53+00:00"
+            "time": "2020-03-11T13:13:22+00:00"
         },
         {
             "name": "nikic/php-parser",
