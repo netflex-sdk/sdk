@@ -86,7 +86,6 @@ class Application extends BaseApplication
       'url'                  => [\Illuminate\Routing\UrlGenerator::class, \Illuminate\Contracts\Routing\UrlGenerator::class],
       'validator'            => [\Illuminate\Validation\Factory::class, \Illuminate\Contracts\Validation\Factory::class],
       'view'                 => [\Illuminate\View\Factory::class, \Illuminate\Contracts\View\Factory::class],
-      Mix::class             => [\Netflex\Support\Mix::class]
     ] as $key => $aliases) {
       foreach ($aliases as $alias) {
         $this->alias($key, $alias);
