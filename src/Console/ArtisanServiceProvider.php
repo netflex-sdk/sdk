@@ -5,6 +5,7 @@ namespace Netflex\Console;
 use Netflex\Console\Commands\CacheClearCommand;
 use Netflex\Console\Commands\ModelMakeCommand;
 use Netflex\Console\Commands\ServeCommand;
+use Netflex\Console\Commands\NetflexSetupCommand;
 
 use Illuminate\Cache\Console\ForgetCommand as CacheForgetCommand;
 use Illuminate\Console\Scheduling\ScheduleFinishCommand;
@@ -98,6 +99,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     'ResourceMake' => 'command.resource.make',
     'RuleMake' => 'command.rule.make',
     'Serve' => 'command.serve',
+    'NetflexSetup' => 'command.netflex.setup',
     'VendorPublish' => 'command.vendor.publish',
   ];
 
@@ -554,6 +556,18 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
   {
     $this->app->singleton('command.serve', function () {
       return new ServeCommand;
+    });
+  }
+
+  /**
+   * Register the command.
+   *
+   * @return void
+   */
+  protected function registerNetflexSetupCommand()
+  {
+    $this->app->singleton('command.netflex.setup', function () {
+      return new NetflexSetupCommand;
     });
   }
 
