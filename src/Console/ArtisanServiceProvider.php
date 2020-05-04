@@ -7,6 +7,8 @@ use Netflex\Console\Commands\ModelMakeCommand;
 use Netflex\Console\Commands\ServeCommand;
 use Netflex\Console\Commands\NetflexSetupCommand;
 
+use Illuminate\Support\ServiceProvider;
+
 use Illuminate\Cache\Console\ForgetCommand as CacheForgetCommand;
 use Illuminate\Console\Scheduling\ScheduleFinishCommand;
 use Illuminate\Console\Scheduling\ScheduleRunCommand;
