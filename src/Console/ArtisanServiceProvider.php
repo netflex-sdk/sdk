@@ -46,8 +46,7 @@ use Illuminate\Foundation\Console\ViewCacheCommand;
 use Illuminate\Foundation\Console\ViewClearCommand;
 use Illuminate\Routing\Console\ControllerMakeCommand;
 use Illuminate\Routing\Console\MiddlewareMakeCommand;
-
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\Console\MailMakeCommand;
 
 class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -101,6 +100,7 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     'Serve' => 'command.serve',
     'NetflexSetup' => 'command.netflex.setup',
     'VendorPublish' => 'command.vendor.publish',
+    'MailMake' => 'command.mail.make',
   ];
 
   /**
@@ -272,6 +272,18 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
   {
     $this->app->singleton('command.exception.make', function ($app) {
       return new ExceptionMakeCommand($app['files']);
+    });
+  }
+
+  /**
+   * Register the command.
+   *
+   * @return void
+   */
+  protected function registerMailMakeCommand()
+  {
+    $this->app->singleton('command.mail.make', function ($app) {
+      return new MailMakeCommand($app['files']);
     });
   }
 
