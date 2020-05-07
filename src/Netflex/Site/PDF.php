@@ -139,7 +139,8 @@ class PDF {
       ]
     );
 
-    $this->mimetype = $response->getHeader('Content-Type');
+    $contentType = $response->getHeader('Content-Type');
+    $this->mimetype = is_array($contentType) ? $contentType[0] : $contentType;
 
     $response = json_decode($response->getBody());
 
