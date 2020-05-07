@@ -6,7 +6,8 @@ use Exception;
 use GuzzleHttp\Client;
 use NF;
 
-class PDF {
+class PDF
+{
 
   private $options;
 
@@ -14,47 +15,56 @@ class PDF {
 
   private $mimetype = 'application/pdf';
 
-  public function __construct ($url, $options = []) {
+  public function __construct($url, $options = [])
+  {
     $this->url = $url;
     $this->options = $options;
     $this->client = new Client();
   }
 
-  public function format ($format) {
+  public function format($format)
+  {
     $this->format = $format;
   }
 
-  public function wait ($wait = 0) {
+  public function wait($wait = 0)
+  {
     $this->options['wait'] = intval($wait);
     return $this;
   }
 
-  public function scale ($scale = 1) {
+  public function scale($scale = 1)
+  {
     $this->options['scale'] = floatval($scale);
     return $this;
   }
 
-  public function marginTop ($margin = 0.5) {
+  public function marginTop($margin = 0.5)
+  {
     $this->options['marginTop'] = floatval($margin);
     return $this;
   }
 
-  public function marginLeft ($margin = 0.5) {
+  public function marginLeft($margin = 0.5)
+  {
     $this->options['marginLeft'] = floatval($margin);
     return $this;
   }
 
-  public function marginRight ($margin = 0.5) {
+  public function marginRight($margin = 0.5)
+  {
     $this->options['marginRight'] = floatval($margin);
     return $this;
   }
 
-  public function marginBottom ($margin = 0.5) {
+  public function marginBottom($margin = 0.5)
+  {
     $this->options['marginBottom'] = floatval($margin);
     return $this;
   }
 
-  public function margin (...$margins) {
+  public function margin(...$margins)
+  {
     $positions = ['Top', 'Right', 'Bottom', 'Left'];
 
     if (count($margins)) {
@@ -74,49 +84,58 @@ class PDF {
     return $this;
   }
 
-  public function width ($width = 210) {
+  public function width($width = 210)
+  {
     $this->options['paperWidth'] = intval($width);
     return $this;
   }
 
-  public function height ($height = 297) {
+  public function height($height = 297)
+  {
     $this->options['paperHeight'] = intval($height);
     return $this;
   }
 
-  public function landscape ($landscape = false) {
+  public function landscape($landscape = false)
+  {
     $this->options['landscape'] = boolval($landscape);
     return $this;
   }
 
-  public function background ($background = true) {
+  public function background($background = true)
+  {
     $this->options['printBackground'] = boolval($background);
     return $this;
   }
 
-  public function preferCSSPageSize ($preference = true) {
+  public function preferCSSPageSize($preference = true)
+  {
     $this->options['preferCSSPageSize'] = boolval($preference);
     return $this;
   }
 
-  public function header ($template = '<!--header-->') {
+  public function header($template = '<!--header-->')
+  {
     $this->options['displayHeaderFooter'] = true;
     $this->options['headerTemplate'] = $template;
     return $this;
   }
 
-  public function footer ($enabled = false, $template = '<!--header-->') {
+  public function footer($enabled = false, $template = '<!--header-->')
+  {
     $this->options['displayHeaderFooter'] = true;
     $this->options['footerTemplate'] = $template;
     return $this;
   }
 
-  public function ignoreInvalidRange ($ignore = true) {
+  public function ignoreInvalidRange($ignore = true)
+  {
     $this->options['ignoreInvalidPageRanges'] = boolval($ignore);
     return $this;
   }
 
-  public function range (...$ranges) {
+  public function range(...$ranges)
+  {
 
     if (count($ranges) === 2 && is_int($ranges[0])) {
       $ranges = [[$ranges[0], $ranges[1]]];
@@ -128,9 +147,11 @@ class PDF {
     return $this;
   }
 
-  public function getURL () {
+  public function getURL()
+  {
     $response = NF::$capi->post(
-      'foundation/pdf', [
+      'foundation/pdf',
+      [
         'json' => [
           'url' => $this->url,
           'format' => $this->format,
@@ -139,33 +160,34 @@ class PDF {
       ]
     );
 
-    $contentType = $response->getHeader('Content-Type');
-    $this->mimetype = is_array($contentType) ? $contentType[0] : $contentType;
-
     $response = json_decode($response->getBody());
 
     return $response->url;
   }
 
-  public function generate () {
+  public function generate()
+  {
     $url = $this->getURL();
     ob_start();
     ob_clean();
 
     if ($url) {
-      header('Content-Type: ' . $this->mimetype);
-      $pdf = $this->client->get($url)
-        ->getBody()
-        ->getContents();
 
-      die($pdf);
+      $pdf = $this->client->get($url);
+
+      $contentType = $pdf->getHeader('Content-Type');
+      $this->mimetype = is_array($contentType) ? $contentType[0] : $contentType;
+
+      header('Content-Type: ' . $this->mimetype);
+      die($pdf->getBody()->getContents());
     }
 
     http_response_code(500);
     die();
   }
 
-  public static function make ($url, $options = []) {
+  public static function make($url, $options = [])
+  {
     return new static($url, $options);
   }
 }
