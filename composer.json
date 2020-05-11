@@ -35,8 +35,6 @@
     },
     "sort-packages": true
   },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
   "require": {
     "php": "^7.3",
     "fideloper/proxy": "^4.0",
