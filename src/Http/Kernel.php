@@ -11,13 +11,13 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 class Kernel extends HttpKernel
 {
   /**
-   * @param Request $request
+   * @param  \Illuminate\Http\Request  $request
    * @param string $domain
-   * @return Request
+   * @return \Illuminate\Http\Request
    */
   protected function injectDomain($request, $domain)
   {
-    $original = $request->headers->get('host', '');
+    $original = $request->headers->get('host');
     $request->headers->set('host', $domain);
     URL::forceRootUrl($request->getScheme() . '://' . $original);
 
@@ -26,14 +26,13 @@ class Kernel extends HttpKernel
 
   /**
    * @param  \Illuminate\Http\Request  $request
-   * @return Request
+   * @return \Illuminate\Http\Request
    */
   protected function modifyRequest($request)
   {
     if ($this->app->environment() !== 'master') {
       if ($domains = $this->app['config']->get('domains')) {
-        $original = $request->headers->get('host', '');
-        list($host) = explode(':', $original);
+        list($host) = explode(':', $request->headers->get('host'));
 
         if (array_key_exists($host, $domains['mappings'] ?? [])) {
           return $this->injectDomain($request, $domains['mappings'][$host]);
