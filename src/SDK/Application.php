@@ -14,13 +14,6 @@ use Illuminate\Foundation\Mix;
 class Application extends BaseApplication
 {
   /**
-   * The Netflex SDK version.
-   *
-   * @var string
-   */
-  const VERSION = '2.0';
-
-  /**
    * Get the path to the bootstrap directory.
    *
    * @param  string  $path Optionally, a path to append to the bootstrap path
