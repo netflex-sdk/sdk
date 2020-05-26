@@ -385,7 +385,7 @@ class ServeCommand extends Command
   {
     $options = parent::getOptions();
     $options[] = [
-      'local', null, InputOption::VALUE_NONE, 'Only serve locally, skips ngrok'
+      'local', "l", InputOption::VALUE_OPTIONAL, 'Only serve locally, skips ngrok', (env("NETFLEX_SKIP_NGROK") ?? false)
     ];
 
     return $options;
