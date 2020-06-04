@@ -3,6 +3,7 @@
 namespace Netflex\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Artisan;
 
 class ClearCache
@@ -19,6 +20,7 @@ class ClearCache
   public function handle($request, Closure $next)
   {
     if ($request->exists($this->parameter)) {
+      Log::debug('Middleware => ClearCache');
       $request->request->remove($this->parameter);
       Artisan::call('cache:clear');
     }
