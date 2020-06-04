@@ -20,7 +20,6 @@ class ClearCache
   public function handle($request, Closure $next)
   {
     if ($request->exists($this->parameter)) {
-      Log::debug('Middleware => ClearCache');
       $request->request->remove($this->parameter);
       Artisan::call('cache:clear');
     }
