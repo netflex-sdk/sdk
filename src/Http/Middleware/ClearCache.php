@@ -22,6 +22,7 @@ class ClearCache
     if ($request->exists($this->parameter)) {
       $request->request->remove($this->parameter);
       Artisan::call('cache:clear');
+      usleep(random_int(250000, 1500000));
     }
 
     return $next($request);
