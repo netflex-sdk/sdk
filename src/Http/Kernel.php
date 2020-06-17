@@ -21,6 +21,11 @@ class Kernel extends HttpKernel
     $request->headers->set('host', $domain);
     URL::forceRootUrl($request->getScheme() . '://' . $original);
 
+    // Bind domain to container to make current_domain helper work
+    $this->app->bind('__current_domain__', function () use ($domain) {
+      return $domain;
+    });
+
     return $request;
   }
 
