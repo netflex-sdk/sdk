@@ -17,9 +17,14 @@ class Kernel extends HttpKernel
    */
   protected function injectDomain($request, $domain)
   {
-    $original = $request->headers->get('host');
-    $request->headers->set('host', $domain);
-    URL::forceRootUrl($request->getScheme() . '://' . $original);
+    if ($domain) {
+      $original = $request->headers->get('host');
+      $request->headers->set('host', $domain);
+      URL::forceRootUrl($request->getScheme() . '://' . $original);
+      $this->app->bind('__current_domain__', function () use ($domain) {
+        return $domain;
+      });
+    }
 
     return $request;
   }
@@ -30,10 +35,10 @@ class Kernel extends HttpKernel
    */
   protected function modifyRequest($request)
   {
+    @list($host) = explode(':', $request->headers->get('host'));
+
     if ($this->app->environment() !== 'master') {
       if ($domains = $this->app['config']->get('domains')) {
-        list($host) = explode(':', $request->headers->get('host'));
-
         if (array_key_exists($host, $domains['mappings'] ?? [])) {
           return $this->injectDomain($request, $domains['mappings'][$host]);
         }
@@ -44,7 +49,7 @@ class Kernel extends HttpKernel
       };
     }
 
-    return $request;
+    return $this->injectDomain($request, $host);
   }
 
   /**
