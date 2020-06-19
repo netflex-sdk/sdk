@@ -14,28 +14,19 @@ use Dotenv\Dotenv;
 use Illuminate\Foundation\Console\ServeCommand as Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
-
+use Netflex\SDK\Process\ExposeProcessBuilder;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Process\Exception\ProcessSignaledException;
 use Symfony\Component\Process\Process;
-
-use JnJairo\Laravel\Ngrok\NgrokProcessBuilder;
-use JnJairo\Laravel\Ngrok\NgrokWebService;
 
 class ServeCommand extends Command
 {
   /**
    * Process builder.
    *
-   * @var \JnJairo\Laravel\Ngrok\NgrokProcessBuilder
+   * @var \Netflex\SDK\Process\ExposeProcessBuilder
    */
   protected $processBuilder;
-
-  /**
-   * Web service.
-   *
-   * @var \JnJairo\Laravel\Ngrok\NgrokWebService
-   */
-  protected $webService;
 
   /**
    * Netflex Proxy Configuration Variable
@@ -273,7 +264,7 @@ class ServeCommand extends Command
       return $status;
     }
 
-    $this->progressBar = $this->output->createProgressBar(6);
+    $this->progressBar = $this->output->createProgressBar(4);
 
     if ('\\' !== \DIRECTORY_SEPARATOR || 'Hyper' === getenv('TERM_PROGRAM')) {
       $this->progressBar->setEmptyBarCharacter(' ');
@@ -290,9 +281,7 @@ class ServeCommand extends Command
     pcntl_signal(SIGINT, [$this, 'shutdown']); // Call $this->shutdown() on SIGINT
     pcntl_signal(SIGTERM, [$this, 'shutdown']); // Call $this->shutdown() on SIGTERM
 
-    $this->processBuilder = new NgrokProcessBuilder(app()->basePath());
-    $this->progressBar->advance(1);
-    $this->webService = new NgrokWebService(new \GuzzleHttp\Client());
+    $this->processBuilder = new ExposeProcessBuilder(app()->basePath());
     $this->progressBar->advance(1);
 
     return $this->runProcess(
@@ -305,7 +294,6 @@ class ServeCommand extends Command
 
   private function shutdown()
   {
-    $this->removeProxy();
     $this->progressBar->finish();
     $this->progressBar->clear();
     $this->line('<info>👋 Server stopped, bye!</info>');
@@ -313,34 +301,17 @@ class ServeCommand extends Command
 
   private function runProcess(Process $process): int
   {
-    $webService = $this->webService;
-
-    $webServiceStarted = false;
     $tunnelStarted = false;
 
-    $process->run(function ($type, $data) use (&$process, &$webService, &$webServiceStarted, &$tunnelStarted) {
-      if (!$webServiceStarted) {
-        if (preg_match('/msg="starting web service".*? addr=(?<addr>\S+)/', $process->getOutput(), $matches)) {
-          $webServiceStarted = true;
-          $webServiceUrl = 'http://' . $matches['addr'];
-          $webService->setUrl($webServiceUrl);
-          $this->progressBar->advance(1);
-        }
-      }
-
-      if ($webServiceStarted && !$tunnelStarted) {
-        $tunnels = $webService->getTunnels();
-
-        if (!empty($tunnels)) {
+    try {
+      $process->run(function ($type, $data) use (&$process, &$tunnelStarted) {
+        if (!$tunnelStarted) {
+          $tunnel = $this->processBuilder->getProxyUrl();
           $tunnelStarted = true;
 
-          $tunnel = Collection::make($tunnels)->first(function ($tunnel) {
-            return $tunnel['proto'] === 'https';
-          });
-
           $this->progressBar->advance(1);
 
-          $this->addProxy($tunnel['public_url']);
+          $this->addProxy($tunnel);
 
           chdir(public_path());
 
@@ -348,7 +319,7 @@ class ServeCommand extends Command
           $this->progressBar->clear();
 
           $this->line("<info>⚡ Ready: </info><fg=cyan;options=underscore>http://{$this->host()}:{$this->port()}</>");
-          $this->line('<info>🌐 Proxy: </info><fg=cyan;options=underscore>' . $tunnel['public_url'] . '</> -> <fg=cyan;options=underscore>http://' . $this->host() . ':' . $this->port() . '</>');
+          $this->line('<info>🌐 Proxy: </info><fg=cyan;options=underscore>' . $tunnel . '</> -> <fg=cyan;options=underscore>http://' . $this->host() . ':' . $this->port() . '</>');
           $this->line('');
 
           passthru($this->serverCommand(), $status);
@@ -361,17 +332,19 @@ class ServeCommand extends Command
 
           return $status;
         }
-      }
 
-      if (Process::OUT === $type) {
-        $process->clearOutput();
-      } else {
-        $this->error($data);
-        $process->clearErrorOutput();
-      }
-    });
+        if (Process::OUT === $type) {
+          $process->clearOutput();
+        } else {
+          $this->error($data);
+          $process->clearErrorOutput();
+        }
+      });
 
-    $this->error($process->getErrorOutput());
+      $this->error($process->getErrorOutput());
+    } catch (ProcessSignaledException $e) {
+      return 0;
+    }
 
     return $process->getExitCode();
   }
@@ -385,7 +358,7 @@ class ServeCommand extends Command
   {
     $options = parent::getOptions();
     $options[] = [
-      'local', "l", InputOption::VALUE_OPTIONAL, 'Only serve locally, skips ngrok', (env("NETFLEX_SKIP_NGROK") ?? false)
+      'local', "l", InputOption::VALUE_OPTIONAL, 'Only serve locally, skips proxy', (env("NETFLEX_SKIP_PROXY") ?? false)
     ];
 
     return $options;

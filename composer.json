@@ -38,7 +38,6 @@
   "require": {
     "php": "^7.3",
     "fideloper/proxy": "^4.0",
-    "jn-jairo/laravel-ngrok": "^1.0",
     "laravel/framework": "^7.0",
     "laravel/tinker": "^2.0",
     "netflex/api": "^2.0",
