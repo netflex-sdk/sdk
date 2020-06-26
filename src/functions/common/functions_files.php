@@ -241,7 +241,7 @@ function cdn_image(array $settings)
 		';
   }
 
-  $picture .= '<img class="' . $image_class . '" src="' . get_cdn_media($path, $dimensions, $compression, $fill) . '" alt="' . $alt . '" title="' . $title . '" style="' . $image_style . '" />';
+  $picture .= '<img loading="lazy" class="' . $image_class . '" src="' . get_cdn_media($path, $dimensions, $compression, $fill) . '" alt="' . $alt . '" title="' . $title . '" style="' . $image_style . '" />';
   $picture .= '</picture>';
 
   return $picture;
