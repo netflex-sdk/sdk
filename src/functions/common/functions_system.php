@@ -174,8 +174,8 @@ function get_label($label, $lang = null)
           'label' => $base64label
         ]]);
       } catch (Exception $e) {} finally {
+        NF::$cache->delete('labels');
         NF::$site->loadLabels();
-        NF::$cache->save('labels', NF::$site->labels, 3600);
       }
 
       if (isset(NF::$site->labels[$base64label][$lang])) {
