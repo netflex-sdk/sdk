@@ -20,4 +20,10 @@ class MockCache {
   public function clear () {
     $this->items = [];
   }
+
+  public function delete($key) {
+    if(isset($this->items[$key]))
+      unset($this->items[$key]);
+    return $this->items;
+  }
 }
