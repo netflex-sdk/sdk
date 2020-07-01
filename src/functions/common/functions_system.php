@@ -166,14 +166,16 @@ function get_label($label, $lang = null)
   }
 
   if ($label != null && $lang != null) {
-    if (isset(NF::$site->labels[$base64label][$lang])) {
-      return NF::$site->labels[$base64label][$lang];
+    if (isset(NF::$site->labels[$base64label])) {
+      return NF::$site->labels[$base64label][$lang] ?? $label;
     } else {
       try {
         NF::$capi->post('foundation/labels', ['json' => [
           'label' => $base64label
         ]]);
-      } catch (Exception $e) {} finally {
+      } catch (Exception $e) {
+        // No action
+      } finally {
         NF::$cache->delete('labels');
         NF::$site->loadLabels();
       }
