@@ -49,6 +49,9 @@ while ($found_url_level > 0 && $found_page_level == null) {
     if (isset($routes[$routing_domain][$process_url])) {
       NF::debug($process_url . ' => ' . $routes[$routing_domain][$process_url], 'Route');
       require(NF::$site_root . '/' . $routes[$routing_domain][$process_url]);
+    } elseif (isset($routes[$group][$process_url])) {
+      NF::debug($process_url . ' => ' . $routes[$group][$process_url], 'Route');
+      require(NF::$site_root . '/' . $routes[$group][$process_url]);
     } else {
       NF::debug($routing_domain, 'Routing domain');
       require(NF::$site_root . '/' . $routes[$process_url]);
