@@ -33,7 +33,7 @@ while ($found_url_level > 0 && $found_page_level == null) {
   NF::debug('Process url', $process_url);
 
   // Check if url has a route
-  if (isset($routes[$process_url]) || isset($routes[$routing_domain][$process_url])) {
+  if (isset($routes[$process_url]) || isset($routes[$routing_domain][$process_url]) || isset($routes[$group][$process_url])) {
 
     // Debug page data
     $netflex_debug = [];
