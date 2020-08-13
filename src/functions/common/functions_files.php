@@ -231,6 +231,7 @@ function cdn_image(array $settings)
   $fill = isset($settings['fill']) ? $settings['fill'] : null;
   $alt = isset($settings['alt']) ? $settings['alt'] : null;
   $title = isset($settings['title']) ? $settings['title'] : null;
+  $lazy = $settings['lazy'] ?? true;
 
   $data = cdn_image_raw($settings);
   $picture = '<picture class="' . $picture_class . '">';
@@ -241,7 +242,7 @@ function cdn_image(array $settings)
 		';
   }
 
-  $picture .= '<img loading="lazy" class="' . $image_class . '" src="' . get_cdn_media($path, $dimensions, $compression, $fill) . '" alt="' . $alt . '" title="' . $title . '" style="' . $image_style . '" />';
+  $picture .= '<img ' . ($lazy ? 'loading="lazy"' : null) . ' class="' . $image_class . '" src="' . get_cdn_media($path, $dimensions, $compression, $fill) . '" alt="' . $alt . '" title="' . $title . '" style="' . $image_style . '" />';
   $picture .= '</picture>';
 
   return $picture;
