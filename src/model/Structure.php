@@ -124,13 +124,20 @@ abstract class Structure implements ArrayAccess, Serializable, JsonSerializable
     return (bool) $published;
   }
 
-  public function save()
+  /**
+   * @param string $description Sets the revision description text in netflex
+   */
+  public function save(?string $description = NULL)
   {
     static::performHookOn($this, 'saving');
     $payload = [
       'revision_publish' => true
     ];
 
+
+    if ($description) {
+      $payload['revision_name'] = $description;
+    }
 
     foreach ($this->_modified as $key) {
       $payload[$key] = $this->attributes[$key];
@@ -192,6 +199,9 @@ abstract class Structure implements ArrayAccess, Serializable, JsonSerializable
       }
       $value = $this->_revisions;
     }
+    if ($key === "modifiedKeys") {
+      return $this->_modified ?? [];
+    }
 
     if (array_key_exists($key, $this->attributes)) {
       $value = $this->attributes[$key];
@@ -216,6 +226,10 @@ abstract class Structure implements ArrayAccess, Serializable, JsonSerializable
     if ($key === "revisions") {
       return;
     }
+
+    if ($key === "modifiedKeys")
+      return;
+
     if ($this->offsetExists($key)) {
       $setter = str_replace('_', '', 'set' . $key . 'attribute');
 
