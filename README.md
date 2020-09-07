@@ -41,4 +41,4 @@ The Netflex SDK is open-sourced software licensed under the [MIT license](LICENS
 
 <hr>
 
-Copyright &copy; 2019 **[Apility AS](https://apility.no)**
+Copyright &copy; 2020 **[Apility AS](https://apility.no)**
