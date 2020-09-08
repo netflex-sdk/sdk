@@ -18,22 +18,22 @@ use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Process\Process;
 
-use JnJairo\Laravel\Ngrok\NgrokProcessBuilder;
-use JnJairo\Laravel\Ngrok\NgrokWebService;
+use Apility\Laravel\Ngrok\NgrokProcessBuilder;
+use Apility\Laravel\Ngrok\NgrokWebService;
 
 class ServeCommand extends Command
 {
   /**
    * Process builder.
    *
-   * @var \JnJairo\Laravel\Ngrok\NgrokProcessBuilder
+   * @var \Apility\Laravel\Ngrok\NgrokProcessBuilder
    */
   protected $processBuilder;
 
   /**
    * Web service.
    *
-   * @var \JnJairo\Laravel\Ngrok\NgrokWebService
+   * @var \Apility\Laravel\Ngrok\NgrokWebService
    */
   protected $webService;
 
@@ -262,7 +262,7 @@ class ServeCommand extends Command
   public function handle()
   {
     if ($this->input->getOption('local')) {
-      passthru($this->serverCommand(), $status);
+      passthru(implode(' ', $this->serverCommand()), $status);
 
       if ($status && $this->canTryAnotherPort()) {
         $this->portOffset += 1;
@@ -351,7 +351,7 @@ class ServeCommand extends Command
           $this->line('<info>🌐 Proxy: </info><fg=cyan;options=underscore>' . $tunnel['public_url'] . '</> -> <fg=cyan;options=underscore>http://' . $this->host() . ':' . $this->port() . '</>');
           $this->line('');
 
-          passthru($this->serverCommand(), $status);
+          passthru(implode(' ', $this->serverCommand()), $status);
 
           if ($status && $this->canTryAnotherPort()) {
             $this->portOffset += 1;

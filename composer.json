@@ -38,13 +38,13 @@
   "require": {
     "php": "^7.3",
     "fideloper/proxy": "^4.0",
-    "jn-jairo/laravel-ngrok": "^1.0",
-    "laravel/framework": "^7.0",
+    "apility/laravel-ngrok": "^2.0",
+    "laravel/framework": "^8.0",
     "laravel/tinker": "^2.0",
-    "netflex/api": "^2.0",
-    "netflex/foundation": "^2.0",
-    "netflex/support": "^2.0",
-    "nunomaduro/laravel-console-menu": "^2.3",
+    "netflex/api": "^3.0",
+    "netflex/foundation": "^3.0",
+    "netflex/support": "^3.0",
+    "nunomaduro/laravel-console-menu": "^3.0",
     "symfony/psr-http-message-bridge": "^2.0"
   },
   "require-dev": {
