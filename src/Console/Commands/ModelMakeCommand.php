@@ -35,6 +35,29 @@ class ModelMakeCommand extends GeneratorCommand
   protected $type = 'Model';
 
   /**
+   * Get the root namespace for the class.
+   *
+   * @return string
+   */
+  protected function rootNamespace()
+  {
+    return $this->laravel->getNamespace() . 'Models\\';
+  }
+
+  /**
+   * Get the destination class path.
+   *
+   * @param  string  $name
+   * @return string
+   */
+  protected function getPath($name)
+  {
+    $name = Str::replaceFirst($this->rootNamespace(), '', $name);
+
+    return $this->laravel['path'] . '/Models/' . str_replace('\\', '/', $name) . '.php';
+  }
+
+  /**
    * Execute the console command.
    *
    * @return void
