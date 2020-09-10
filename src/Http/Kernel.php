@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Routing\Pipeline;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
+use Netflex\Http\Middleware\Ngrok;
+
 class Kernel extends HttpKernel
 {
   /**
@@ -68,6 +70,10 @@ class Kernel extends HttpKernel
     $this->app->instance('request', $this->modifyRequest($request));
 
     Facade::clearResolvedInstance('request');
+
+    if (env('NGROK_PROXY')) {
+      $this->pushMiddleware(Ngrok::class);
+    }
 
     return (new Pipeline($this->app))
       ->send($request)

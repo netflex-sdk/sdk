@@ -351,7 +351,8 @@ class ServeCommand extends Command
           $this->line('<info>🌐 Proxy: </info><fg=cyan;options=underscore>' . $tunnel['public_url'] . '</> -> <fg=cyan;options=underscore>http://' . $this->host() . ':' . $this->port() . '</>');
           $this->line('');
 
-          passthru(implode(' ', $this->serverCommand()), $status);
+          $command = implode(' ', array_merge(['NGROK_PROXY=true'], $this->serverCommand(), ['-d variables_order=EGPCS ']));
+          passthru($command, $status);
 
           if ($status && $this->canTryAnotherPort()) {
             $this->portOffset += 1;
