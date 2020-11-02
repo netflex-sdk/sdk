@@ -12,6 +12,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Cache\Console\ForgetCommand as CacheForgetCommand;
 use Illuminate\Console\Scheduling\ScheduleFinishCommand;
 use Illuminate\Console\Scheduling\ScheduleRunCommand;
+use Illuminate\Console\Scheduling\ScheduleWorkCommand;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Foundation\Console\ChannelMakeCommand;
 use Illuminate\Foundation\Console\ClearCompiledCommand;
@@ -70,6 +71,9 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
     'RouteCache' => 'command.route.cache',
     'RouteClear' => 'command.route.clear',
     'RouteList' => 'command.route.list',
+    'ScheduleFinish' => ScheduleFinishCommand::class,
+    'ScheduleRun' => ScheduleRunCommand::class,
+    'ScheduleWork' => ScheduleWorkCommand::class,
     'Up' => 'command.up',
     'ViewCache' => 'command.view.cache',
     'ViewClear' => 'command.view.clear',
@@ -559,6 +563,16 @@ class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvid
   protected function registerScheduleRunCommand()
   {
     $this->app->singleton(ScheduleRunCommand::class);
+  }
+
+  /**
+   * Register the command.
+   *
+   * @return void
+   */
+  protected function registerScheduleWorkCommand()
+  {
+    $this->app->singleton(ScheduleWorkCommand::class);
   }
 
   /**
