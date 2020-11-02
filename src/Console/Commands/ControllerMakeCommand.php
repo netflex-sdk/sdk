@@ -4,7 +4,9 @@ namespace Netflex\Console\Commands;
 
 use Symfony\Component\Console\Input\InputOption;
 use Illuminate\Routing\Console\ControllerMakeCommand as GeneratorCommand;
+
 use Netflex\Pages\Controllers\PageController;
+use Netflex\Pages\PreviewRequest;
 
 class ControllerMakeCommand extends GeneratorCommand
 {
@@ -101,6 +103,7 @@ class ControllerMakeCommand extends GeneratorCommand
     {
         return array_merge($replace, [
             'DummyBaseClass' => PageController::class,
+            'DummyRequestClass' => PreviewRequest::class,
         ]);
     }
 
