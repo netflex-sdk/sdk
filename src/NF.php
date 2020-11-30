@@ -12,6 +12,7 @@ use Netflex\Site\Security;
 use Netflex\Site\Commerce;
 use Netflex\Site\ElasticSearch;
 use Netflex\API;
+use Dotenv\Dotenv;
 
 class NF
 {
@@ -83,6 +84,9 @@ class NF
         self::setRoot($_SERVER['DOCUMENT_ROOT'] . '/');
       }
     }
+
+    $dotenv = Dotenv::createImmutable(self::$site_root);
+    $dotenv->load();
 
     if ($site == null) {
       $site = md5(self::$site_root);

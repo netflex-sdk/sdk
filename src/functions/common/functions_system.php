@@ -8,6 +8,9 @@
  */
 function get_setting($alias)
 {
+  if ($setting = getenv($alias)) {
+    return $setting;
+  }
 
   if (array_key_exists($alias, NF::$site->variables)) {
     return NF::$site->variables[$alias];
