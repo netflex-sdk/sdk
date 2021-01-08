@@ -85,8 +85,10 @@ class NF
       }
     }
 
-    $dotenv = Dotenv::createImmutable(self::$site_root);
-    $dotenv->load();
+    if (file_exists(realpath(self::$site_root) . '/.env')) {
+      $dotenv = Dotenv::createImmutable(self::$site_root);
+      $dotenv->load();
+    }
 
     if ($site == null) {
       $site = md5(self::$site_root);
