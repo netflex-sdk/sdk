@@ -85,7 +85,7 @@ class NF
       }
     }
 
-    if (file_exists(realpath(self::$site_root) . '/.env')) {
+    if ((getenv('ENV') !== 'master') && file_exists(realpath(self::$site_root) . '/.env')) {
       $dotenv = Dotenv::createImmutable(self::$site_root);
       $dotenv->load();
     }
