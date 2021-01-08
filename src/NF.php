@@ -126,7 +126,8 @@ class NF
   }
 
   /** Sets webpackAssets */
-  public static function setWebpackAssets () {
+  public static function setWebpackAssets()
+  {
     global $payload;
 
     $basePath = $payload->domain ?? null;
@@ -238,7 +239,8 @@ class NF
    * @param bool $assoc = false Determines if the response should be parsed as associative array or object
    * @return object|array
    */
-  public static function get ($url, $assoc = false) {
+  public static function get($url, $assoc = false)
+  {
     return API::getClient()
       ->get($url, $assoc);
   }
@@ -251,7 +253,8 @@ class NF
    * @param bool $assoc = false Determines if the response should be parsed as associative array or object
    * @return object|array
    */
-  public static function put ($url, $payload = [], $assoc = false) {
+  public static function put($url, $payload = [], $assoc = false)
+  {
     return API::getClient()
       ->put($url, $payload, $assoc);
   }
@@ -264,7 +267,8 @@ class NF
    * @param bool $assoc = false Determines if the response should be parsed as associative array or object
    * @return object|array|string
    */
-  public static function post ($url, $payload = [], $assoc = false) {
+  public static function post($url, $payload = [], $assoc = false)
+  {
     return API::getClient()
       ->post($url, $payload, $assoc);
   }
@@ -276,7 +280,8 @@ class NF
    * @param bool $assoc = false Determines if the response should be parsed as associative array or object
    * @return object|array|string
    */
-  public static function delete ($url, $assoc = false) {
+  public static function delete($url, $assoc = false)
+  {
     return API::getClient()
       ->delete($url, $assoc);
   }
