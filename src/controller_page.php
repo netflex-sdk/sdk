@@ -12,6 +12,19 @@ require_once(__DIR__ . '/model/autoloader.php');
 $real_url = explode('?', urldecode($_GET['_path']))[0];
 $url = trim($real_url, '/');
 
+if (strpos($url, '.well-known/netflex/CacheStore') === 0) {
+  if (isset($_GET['key'])) {
+    if (NF::$cache->delete($_GET['key'])) {
+      echo 'Key deleted';
+    } else {
+      echo 'Key does not exist';
+    }
+  } else {
+    echo 'Key is missing';
+  }
+  exit;
+}
+
 if (strpos($url, '.well-known/netflex') === 0) {
   $token = $_GET['token'] ?? null;
 
