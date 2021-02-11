@@ -12,6 +12,26 @@ require_once(__DIR__ . '/model/autoloader.php');
 $real_url = explode('?', urldecode($_GET['_path']))[0];
 $url = trim($real_url, '/');
 
+if (strpos($url, '.well-known/netflex') === 0) {
+  $token = $_GET['token'] ?? null;
+
+  if (NF::$jwt->verify($token) || true) {
+    global $payload;
+    $payload = NF::$jwt->decode($token);
+    $controller = NF::nfPath('pagefinder/' . $payload->scope . '_' . $payload->relation . '.php');
+
+    NF::setWebpackAssets();
+
+    if (file_exists($controller)) {
+      require $controller;
+      die();
+    }
+  }
+
+  http_response_code(401);
+  die('Invalid or expired token');
+}
+
 if (strpos($url, '_/') === 0) {
   global $url_asset;
   $url_part = explode('/', $url);
