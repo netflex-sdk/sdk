@@ -13,7 +13,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 $basepath = __DIR__ . '/functions';
-$mode = strpos($_GET['_path'], '_/') === 0 ? 'editor' : 'live';
+$mode = (strpos($_GET['_path'], '_/') === 0 || strpos($_GET['_path'], '.well-known/netflex') === 0) ? 'editor' : 'live';
 
 foreach (glob($basepath . '/common/*.php') as $filename) {
   require_once($filename);
