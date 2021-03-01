@@ -37,7 +37,11 @@ function get_page_blocks($area, $vars = null)
       $alias = NF::$site->templates['components'][$block]['alias'];
       $blockhash = $section['title'];
       NF::debug('components/' . $alias, 'component');
-      require(NF::$site_root . 'components/' . $alias . '.php');
+
+      if (file_exists(NF::$site_root . 'components/' . $alias . '.php')) {
+        require(NF::$site_root . 'components/' . $alias . '.php');
+      }
+
       NF::debug('components/' . $alias, '!component');
     }
   }
