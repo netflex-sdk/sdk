@@ -25,6 +25,26 @@ class Application extends BaseApplication
   }
 
   /**
+   * Determine if the application is in the local environment.
+   *
+   * @return bool
+   */
+  public function isLocal()
+  {
+    return $this['env'] !== 'master';
+  }
+
+  /**
+   * Determine if the application is in the production environment.
+   *
+   * @return bool
+   */
+  public function isProduction()
+  {
+    return $this['env'] === 'master';
+  }
+
+  /**
    * Register all of the base service providers.
    *
    * @return void
