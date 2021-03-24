@@ -16,5 +16,9 @@ class CacheClearCommand extends ClearCommand
   {
     parent::handle();
     Artisan::call('view:clear');
+
+    if (file_exists(storage_path('sdk/cache/routes.php'))) {
+      unlink(storage_path('sdk/cache/routes.php'));
+    }
   }
 }
