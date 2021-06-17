@@ -6,6 +6,7 @@ use Netflex\Console\Commands\CacheClearCommand;
 use Netflex\Console\Commands\ModelMakeCommand;
 use Netflex\Console\Commands\ServeCommand;
 use Netflex\Console\Commands\NetflexSetupCommand;
+use Illuminate\Foundation\Console\MailMakeCommand;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -49,7 +50,6 @@ use Illuminate\Foundation\Console\ViewCacheCommand;
 use Illuminate\Foundation\Console\ViewClearCommand;
 use Netflex\Console\Commands\ControllerMakeCommand;
 use Illuminate\Routing\Console\MiddlewareMakeCommand;
-use Illuminate\Foundation\Console\MailMakeCommand;
 
 class ArtisanServiceProvider extends ServiceProvider implements DeferrableProvider
 {
