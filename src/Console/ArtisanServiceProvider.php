@@ -6,7 +6,7 @@ use Netflex\Console\Commands\CacheClearCommand;
 use Netflex\Console\Commands\ModelMakeCommand;
 use Netflex\Console\Commands\ServeCommand;
 use Netflex\Console\Commands\NetflexSetupCommand;
-use Illuminate\Foundation\Console\MailMakeCommand;
+use Netflex\Console\Commands\MailMakeCommand;
 
 use Illuminate\Support\ServiceProvider;
 
