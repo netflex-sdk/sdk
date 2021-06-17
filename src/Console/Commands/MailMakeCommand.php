@@ -65,9 +65,15 @@ class MailMakeCommand extends Command
      */
     protected function getStub()
     {
-        return $this->option('mjml')
-            ? __DIR__ . '/stubs/mjml-mail.stub'
-            : parent::getStub();
+        if ($this->option('mjml')) {
+            return __DIR__ . '/stubs/mjml-mail.stub';
+        }
+
+        if ($this->option('markdown')) {
+            __DIR__ . '/stubs/markdown-mail.stub';
+        }
+
+        return __DIR__ . '/stubs/mail.stub';
     }
 
     /**
