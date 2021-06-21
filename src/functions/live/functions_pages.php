@@ -47,8 +47,16 @@ function get_page_content_string($area, $column)
  */
 function get_page_content($area, $column = 'html')
 {
-  if (isset(NF::$site->content[$area]) && isset(NF::$site->content[$area][$column])) {
-    return NF::$site->content[$area][$column];
+  if (isset(NF::$site->content[$area])) {
+    if (get_setting('allow_duplicate_content')) {
+      if (isset(NF::$site->content[$area][0][$column])) {
+        return NF::$site->content[$area][0][$column];
+      }
+    }
+
+    if (isset(NF::$site->content[$area][$column])) {
+      return NF::$site->content[$area][$column];
+    }
   }
 
   return null;
