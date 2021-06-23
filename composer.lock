@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4faeceffc733c581bf2733bf4bd3f023",
+    "content-hash": "2120616d1af95d0f17cad7f5e193158a",
     "packages": [
         {
             "name": "apility/laravel-ngrok",
-            "version": "v2.1.0",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/apility/laravel-ngrok.git",
-                "reference": "27573217850700261624c0060f7f9138099f8c91"
+                "reference": "6f232eebdee7ec54d15ee66d0c72617eb71bb7a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/apility/laravel-ngrok/zipball/27573217850700261624c0060f7f9138099f8c91",
-                "reference": "27573217850700261624c0060f7f9138099f8c91",
+                "url": "https://api.github.com/repos/apility/laravel-ngrok/zipball/6f232eebdee7ec54d15ee66d0c72617eb71bb7a5",
+                "reference": "6f232eebdee7ec54d15ee66d0c72617eb71bb7a5",
                 "shasum": ""
             },
             "require": {
@@ -68,9 +68,9 @@
                 "laravel-ngrok"
             ],
             "support": {
-                "source": "https://github.com/apility/laravel-ngrok/tree/v2.1.0"
+                "source": "https://github.com/apility/laravel-ngrok/tree/v2.2.0"
             },
-            "time": "2021-05-04T12:53:56+00:00"
+            "time": "2021-06-23T08:06:17+00:00"
         },
         {
             "name": "beberlei/assert",

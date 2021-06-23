@@ -37,7 +37,7 @@
   },
   "require": {
     "php": "^7.3",
-    "apility/laravel-ngrok": "^2.1",
+    "apility/laravel-ngrok": "^2.2",
     "fideloper/proxy": "^4.0",
     "laravel/framework": "^8.0",
     "laravel/tinker": "^2.0",
