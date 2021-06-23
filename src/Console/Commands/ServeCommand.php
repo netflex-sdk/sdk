@@ -91,6 +91,10 @@ class ServeCommand extends Command
     return $port + $this->portOffset;
   }
 
+  protected function region () {
+    return $this->input->getOption('region') ?: 'eu';
+  }
+
   protected function client()
   {
     if (!$this->userClient) {
@@ -298,7 +302,8 @@ class ServeCommand extends Command
     return $this->runProcess(
       $this->processBuilder->buildProcess(
         $this->host(),
-        $this->port()
+        $this->port(),
+        $this->region()
       )
     );
   }
@@ -385,9 +390,8 @@ class ServeCommand extends Command
   protected function getOptions()
   {
     $options = parent::getOptions();
-    $options[] = [
-      'local', "l", InputOption::VALUE_OPTIONAL, 'Only serve locally, skips ngrok', (env("NETFLEX_SKIP_NGROK") ?? false)
-    ];
+    $options[] = ['local', 'l', InputOption::VALUE_OPTIONAL, 'Only serve locally, skips ngrok', env("NETFLEX_SKIP_NGROK", false)];
+    $options[] = ['region', 'r', InputOption::VALUE_OPTIONAL, 'Specify ngrok region, defaults to eu', 'eu'];
 
     return $options;
   }
