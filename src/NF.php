@@ -223,6 +223,11 @@ class NF
    */
   private static function initGuzzle($config)
   {
+
+    if (($config['url'] ?? null) && ($value = $config['url']['baseUrl'] ?? false)) {
+      API::setBaseURI($value);
+    }
+
     API::setCredentials(
       $config['api']['pubkey'],
       $config['api']['privkey']
