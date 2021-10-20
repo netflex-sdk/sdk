@@ -97,7 +97,8 @@ abstract class Structure implements ArrayAccess, Serializable, JsonSerializable
     static::bootUnlessBooted();
   }
 
-  public function getPublishedAttribute ($published) {
+  public function getPublishedAttribute($published)
+  {
     global $_mode;
 
     if ($published && $this->use_time) {
@@ -110,10 +111,10 @@ abstract class Structure implements ArrayAccess, Serializable, JsonSerializable
       }
 
       try {
-        $stop = $this->stop ? $this->stop : PHP_INT_MAX;
+        $stop = $this->stop ? $this->stop : Carbon::now()->endOfCentury();
         $stop = Carbon::parse($stop);
       } catch (Exception $ex) {
-        $stop = Carbon::parse(PHP_INT_MAX);
+        $stop = Carbon::now()->endOfCentury();
       }
 
       $now = Carbon::now();
@@ -389,7 +390,8 @@ abstract class Structure implements ArrayAccess, Serializable, JsonSerializable
 
         return static::generateObject($data);
       }
-    } catch (Exception $ex) { /* intentionally left blank */ }
+    } catch (Exception $ex) { /* intentionally left blank */
+    }
 
     return null;
   }
@@ -544,7 +546,8 @@ abstract class Structure implements ArrayAccess, Serializable, JsonSerializable
     }
   }
   private static function boot()
-  { }
+  {
+  }
 
   public static function performHookOn($subject, $domain)
   {
