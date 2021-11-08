@@ -91,7 +91,8 @@ class ServeCommand extends Command
     return $port + $this->portOffset;
   }
 
-  protected function region () {
+  protected function region()
+  {
     return $this->input->getOption('region') ?: 'eu';
   }
 
@@ -265,12 +266,13 @@ class ServeCommand extends Command
    */
   public function handle()
   {
+    chdir(public_path());
+
     if ($this->input->getOption('local')) {
       passthru(implode(' ', $this->serverCommand()), $status);
 
       if ($status && $this->canTryAnotherPort()) {
         $this->portOffset += 1;
-
         return $this->handle();
       }
 
@@ -347,8 +349,6 @@ class ServeCommand extends Command
 
           $this->addProxy($tunnel['public_url']);
 
-          chdir(public_path());
-
           $this->progressBar->finish();
           $this->progressBar->clear();
 
@@ -361,7 +361,6 @@ class ServeCommand extends Command
 
           if ($status && $this->canTryAnotherPort()) {
             $this->portOffset += 1;
-
             return $this->handle();
           }
 
