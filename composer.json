@@ -1,0 +1,53 @@
+{
+  "name": "netflex/sdk",
+  "description": "Netflex platform SDK",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "sdk",
+    "netflex",
+    "framework"
+  ],
+  "homepage": "https://github.com/netflex-sdk/sdk",
+  "authors": [
+    {
+      "name": "Thomas Alrek",
+      "email": "thomas@apility.no",
+      "homepage": "https://github.com/thomas-alrek",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/netflex-sdk/sdk/issues",
+    "source": "https://github.com/netflex-sdk/sdk"
+  },
+  "autoload": {
+    "files": [
+      "src/helpers.php"
+    ],
+    "psr-4": {
+      "Netflex\\": "src/"
+    }
+  },
+  "config": {
+    "platform": {
+      "php": "7.3"
+    },
+    "sort-packages": true
+  },
+  "require": {
+    "php": "^7.3",
+    "apility/laravel-ngrok": "^2.2",
+    "fideloper/proxy": "^4.0",
+    "laravel/framework": "^8.0",
+    "laravel/tinker": "^2.0",
+    "netflex/api": "^3.0",
+    "netflex/foundation": "^3.0",
+    "netflex/support": "^3.0",
+    "nunomaduro/laravel-console-menu": "^3.0",
+    "symfony/psr-http-message-bridge": "^2.0"
+  },
+  "require-dev": {
+    "symfony/cache": "^5.0"
+  }
+}
