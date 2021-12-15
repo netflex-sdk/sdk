@@ -131,12 +131,14 @@ class NF
     global $payload;
 
     $basePath = $payload->domain ?? null;
+    $assetVersion = isset(self::$config['deploy']) ? self::$config['deploy']['id'] : null;
 
     self::$webpackAssets = isset(self::$config['webpackManifest'])
       ? new WebpackAssets(self::$config['webpackManifest'], [
         'defaultEntrypoint' => 'app',
         'preload' => true,
         'basePath' => $basePath,
+        'version' => $assetVersion,
       ])
       : null;
 
