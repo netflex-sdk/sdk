@@ -50,7 +50,7 @@ function get_page_content_list($area, $column = null)
  */
 function get_display_content($relation_id, $area, $column)
 {
-  $content = json_decode(NF::$capi->get('builder/pages/' . $relation_id . '/content')->getBody(), true);
+  $content = get_full_content_array($relation_id);
 
   foreach ($content as $item) {
     if ($item['area'] === $area) {
