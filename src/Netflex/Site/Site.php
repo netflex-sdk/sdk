@@ -1,4 +1,5 @@
 <?php
+
 namespace Netflex\Site;
 
 use NF;
@@ -15,7 +16,8 @@ class Site
   public $nav;
   public $variables;
 
-  public function loadGlobals () {
+  public function loadGlobals()
+  {
     global $_mode;
 
     $this->_pages = NF::$cache->fetch('pages');
@@ -71,7 +73,8 @@ class Site
     NF::$jwt = new JWT($this->variables['netflex_api']);
   }
 
-  public function loadPage($id, $revision) {
+  public function loadPage($id, $revision)
+  {
     global $_mode;
 
     $this->content = NF::$cache->fetch("page/$id");
@@ -85,8 +88,13 @@ class Site
   }
 
 
-  public function loadContent($id, $revision) {
+  public function loadContent($id, $revision)
+  {
     try {
+      if (isset($this->pages[$id]) && $this->pages[$id]['revision'] == $revision) {
+        return;
+      }
+
       $contentItems = json_decode(NF::$capi->get('builder/pages/' . $id . '/content' . ($revision ? ('/' . $revision) : ''))->getBody(), true);
       foreach ($contentItems as $item) {
         if ($item['published'] === '1') {
@@ -113,7 +121,8 @@ class Site
     }
   }
 
-  public function loadStatics () {
+  public function loadStatics()
+  {
     try {
       $statics = json_decode(NF::$capi->get('foundation/globals')->getBody(), true);
 
@@ -127,8 +136,9 @@ class Site
     }
   }
 
-  public function loadPages () {
-    $request = NF::$capi->get('builder/pages');
+  public function loadPages()
+  {
+    $request = NF::$capi->get('builder/pages/content');
     $result = json_decode($request->getBody(), true);
 
     if ($result) {
@@ -138,7 +148,8 @@ class Site
     }
   }
 
-  public function loadNav () {
+  public function loadNav()
+  {
     $pages = $this->pages;
     foreach ($pages as $id => $page) {
 
@@ -149,7 +160,8 @@ class Site
     }
   }
 
-  public function loadVariables () {
+  public function loadVariables()
+  {
     $variables = json_decode(NF::$capi->get('foundation/variables')->getBody(), true);
 
     if ($variables) {
@@ -159,7 +171,8 @@ class Site
     }
   }
 
-  public function loadTemplates () {
+  public function loadTemplates()
+  {
     try {
       $templates = json_decode(NF::$capi->get('foundation/templates')->getBody(), true);
 
@@ -177,7 +190,8 @@ class Site
     }
   }
 
-  public function loadLabels () {
+  public function loadLabels()
+  {
     $labels = NF::$cache->fetch('labels');
 
     if (!is_array($labels)) {
@@ -188,7 +202,8 @@ class Site
     $this->labels = $labels;
   }
 
-  public function loadStructures () {
+  public function loadStructures()
+  {
     $structures = json_decode(NF::$capi->get('builder/structures/full')->getBody(), true);
 
     foreach ($structures as $structure) {
