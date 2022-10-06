@@ -90,12 +90,17 @@ class Site
 
   public function loadContent($id, $revision)
   {
+    global $_mode;
+
     try {
-      if (isset($this->pages[$id]) && $this->pages[$id]['revision'] == $revision) {
-        return;
+      $contentItems = [];
+
+      if (!$_mode && isset($this->pages[$id]) && $this->pages[$id]['revision'] == $revision) {
+        $contentItems = $this->pages[$id]['content'];
+      } else {
+        $contentItems = json_decode(NF::$capi->get('builder/pages/' . $id . '/content' . ($revision ? ('/' . $revision) : ''))->getBody(), true);
       }
 
-      $contentItems = json_decode(NF::$capi->get('builder/pages/' . $id . '/content' . ($revision ? ('/' . $revision) : ''))->getBody(), true);
       foreach ($contentItems as $item) {
         if ($item['published'] === '1') {
           if (isset($this->content[$item['area']])) {
