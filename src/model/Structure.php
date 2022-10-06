@@ -330,14 +330,23 @@ abstract class Structure implements ArrayAccess, Serializable, JsonSerializable
   public static function all()
   {
     $structureId = (new static)->directory;
+
+    if ($allItems = NF::$cache->get('entry/' . $structureId)) {
+      return $allItems;
+    }
+
     $response = NF::$capi->get('builder/structures/' . $structureId . '/entries');
     $response = json_decode($response->getBody(), true);
 
-    return collect(array_map(function ($entry) {
+    $allItems = collect(array_map(function ($entry) {
       $cacheKey = 'entry/' . $entry['id'];
       NF::$cache->save($cacheKey, $entry);
       return static::generateObject($entry);
     }, $response))->filter()->values();
+
+    NF::$cache->save('entry/' . $structureId, $allItems);
+
+    return $allItems;
   }
 
   public static function find($id)
