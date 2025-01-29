@@ -175,7 +175,7 @@ function get_page_content_image($area, $column, $dimensions, $compression, $clas
 
   $dimensions = $compression === 'o' ? '' : $dimensions;
 
-  $src = 'https://cdn.netflexapp.com/placeholder/' . $dimensions;
+  $src = 'https://cdn.netflexapp.com/media/placeholder/' . $dimensions;
 
   if ($image[$column]) {
     $domain = get_setting('site_cdn_protocol') . '://' . get_setting('site_cdn_url');
