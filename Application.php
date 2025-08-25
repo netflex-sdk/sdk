@@ -19,7 +19,7 @@ class Application extends BaseApplication
    */
   public function isLocal()
   {
-    return $this['env'] !== 'production';
+    return $this['env'] !== 'master';
   }
 
   /**
@@ -29,7 +29,7 @@ class Application extends BaseApplication
    */
   public function isProduction()
   {
-    return $this['env'] === 'production';
+    return $this['env'] === 'master';
   }
 
   /**
