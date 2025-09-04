@@ -2,14 +2,12 @@
 
 namespace Netflex\SDK;
 
-use Exception;
 use Netflex\Log\LogServiceProvider;
 use Netflex\API\Providers\APIServiceProvider;
 
 use Illuminate\Routing\RoutingServiceProvider;
 use Illuminate\Events\EventServiceProvider;
 use Illuminate\Foundation\Application as BaseApplication;
-use Illuminate\Foundation\Mix;
 use Netflex\Cache\Providers\CacheServiceProvider;
 
 class Application extends BaseApplication
@@ -21,7 +19,7 @@ class Application extends BaseApplication
    */
   public function isLocal()
   {
-    return $this['env'] !== 'master';
+    return $this['env'] !== 'production';
   }
 
   /**
@@ -31,7 +29,7 @@ class Application extends BaseApplication
    */
   public function isProduction()
   {
-    return $this['env'] === 'master';
+    return $this['env'] === 'production';
   }
 
   /**
